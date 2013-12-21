@@ -1,0 +1,113 @@
+//
+//  Polygon.cpp
+//  Lab1
+//
+//  Created by Влад Мазур on 16.10.13.
+//  Copyright (c) 2013 Vlad Mazur. All rights reserved.
+//
+
+#include "Polygon.h"
+#include "Square.h"
+
+#include <math.h>
+
+#define rad(x) ((x)*M_PI/180)
+
+//unsigned Polygon::count = 0;
+
+unsigned Polygon::getCountOfCorners()
+{
+    return cornersCount;
+}
+
+void Polygon::setCountOfCorners(unsigned newCornersCount)
+{
+    cornersCount = newCornersCount;
+    alpha = 360/cornersCount;
+    
+    sideSize = 2*Radius*sin(rad(alpha/2));
+    
+    makeVertexes();
+}
+
+void Polygon::makeVertexes()
+{
+    vertexes.clear();
+    int n=0;
+    for (float alp=90+alpha/2; n++ < cornersCount; alp= alp+alpha)
+    {
+        float x = Radius * cos(rad(alp));
+        float y = Radius * sin(rad(alp));
+        
+        vertexes.push_back(Point(center.x+x, center.y+y));
+    }
+}
+
+Polygon::Polygon(Point leftUpper, Point rightBottom, unsigned newCornersCount, Color newColor, Line newLine)
+{
+//    используем Square чтобы сделать правильный квадрат и получить центр
+    Square sq(leftUpper, rightBottom);
+    leftUpperPoint = sq.leftUpperPoint;
+    rightBottomPoint = sq.rightBottomPoint;
+    center = sq.getCenter();
+    Radius = sq.getSideSize() / 2;
+    setCountOfCorners(newCornersCount);
+}
+
+vector<Point> Polygon::getVertexes() const
+{
+    return vertexes;
+}
+
+void Polygon::move(float dx, float dy)
+{
+    for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+        it->x += dx;
+        it->y += dy;
+    }
+    leftUpperPoint.x += dx;
+    leftUpperPoint.y += dy;
+    rightBottomPoint.x += dx;
+    rightBottomPoint.y += dy;
+    center.x += dx;
+    center.y += dy;
+}
+
+void Polygon::scale(float scale)
+{
+    Square sq(leftUpperPoint, rightBottomPoint);
+    sq.scale(scale);
+    center = sq.getCenter();
+    Radius = sq.getSideSize() / 2;
+    sideSize = 2*Radius*sin(rad(alpha/2));
+    makeVertexes();
+}
+
+void Polygon::reflect(REFLECT_TYPE type)
+{
+    if (type == REFLECT_HORIZONTAL) {
+        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+            it->x = 2 * center.x - it->x;
+        }
+    }
+    if (type == REFLECT_VERTICAL) {
+        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+            it->y = 2 * center.y - it->y;
+        }
+    }
+}
+
+std::ostream &operator << (std::ostream &os, const Polygon &p)
+{
+    os << "Polygon #" <<p.number << ":\n\tKey points:\n\t" << p.leftUpperPoint << "\t" << p.rightBottomPoint << "\n\tCenter: " << p.center << "\tNumber of cornerns: " << p.cornersCount << "\n";
+    os << "\tColor: " << p.backGroundColor << "\n\tLine Style:\n\t" << p.line << "\n";
+    os << "\tAlpha corner:" << p.alpha << "\n";
+    os << "\tSize of sides:" << p.sideSize << "\n\n";
+    os << "\tVertexes:\n";
+    for (vector<Point>::iterator it = p.getVertexes().begin(); it != p.getVertexes().end(); ++it) {
+        cout << "\t" << (Point) *it;
+    }
+    os << "End of #" << p.number;
+    os << "\n\n\n";
+    return os;
+}
