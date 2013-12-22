@@ -5,15 +5,14 @@
 ColorButtonPicker::ColorButtonPicker(QWidget *parent) :
     QWidget(parent)
 {
+    color = Color(255, 255, 255, 255);
 }
 
 void ColorButtonPicker::mousePressEvent (QMouseEvent * event)
 {
     QColor col = QColorDialog::getColor(Qt::white, this);
-    color.red = col.red();
-    color.green = col.green();
-    color.blue = col.blue();
-    color.alpha = col.alpha();
+    Color c(col.red(), col.green(), col.blue(), col.alpha());
+    setColor(c);
     update();
 }
 
@@ -25,4 +24,12 @@ void ColorButtonPicker::paintEvent (QPaintEvent *)
     painter.setBrush(QBrush(QColor(color.red, color.green, color.blue, color.alpha)));
     QRectF rectangle(0.5, 0.5, 60, 60);
     painter.drawRoundedRect(rectangle, 10.0, 10.0);
+}
+
+void ColorButtonPicker::setColor(Color col)
+{
+    if(color != col) {
+        color = col;
+    }
+    emit colorChanged(col);
 }

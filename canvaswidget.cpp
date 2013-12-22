@@ -94,3 +94,9 @@ void CanvasWidget::paintEvent (QPaintEvent *)
     }
 }
 
+void CanvasWidget::setColor(Color col)
+{
+    workColor = col;
+    cout << col;
+}
+

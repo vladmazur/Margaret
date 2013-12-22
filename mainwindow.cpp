@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QObject::connect(ui->colorPickerButton, SIGNAL(colorChanged(Color)),
+                     ui->canvas, SLOT(setColor(Color)));
 }
 
 MainWindow::~MainWindow()

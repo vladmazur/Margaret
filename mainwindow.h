@@ -21,14 +21,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-
-//    QGraphicsScene *scene;
-//    QGraphicsEllipseItem *ellipse;
-//    QGraphicsRectItem *rectangle;
-//    QGraphicsTextItem *text;
-//    QGraphicsPolygonItem *poly;
-
-//    QRecrangle
 };
 
 #endif // MAINWINDOW_H

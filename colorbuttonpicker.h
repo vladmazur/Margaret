@@ -11,13 +11,13 @@ public:
     explicit ColorButtonPicker(QWidget *parent = 0);
 
 signals:
-
+    void colorChanged(Color col);
 public slots:
 
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void paintEvent (QPaintEvent * event);
-
+    void setColor(Color col);
     Color color;
 };
 

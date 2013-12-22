@@ -39,4 +39,12 @@ inline Color operator*(Color lhs, const double s)
   return lhs;
 }
 
+inline bool operator !=(const Color& left, const Color& right)
+{
+    return (!((left.red == right.red) &&
+            (left.green == right.green) &&
+            (left.blue == right.blue) &&
+            (left.alpha == right.alpha)));
+}
+
 #endif /* defined(__Lab1__Color__) */

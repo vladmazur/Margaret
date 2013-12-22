@@ -16,6 +16,7 @@ public:
     Figure* selected;
 signals:
 public slots:
+    void setColor(Color col);
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);
@@ -23,5 +24,6 @@ protected:
     virtual void paintEvent (QPaintEvent * event);
     Point pressedPoint;
     bool creating, resizingLU, resizingDR;
+    Color workColor;
 };
 #endif // CANVASWIDGET_H
