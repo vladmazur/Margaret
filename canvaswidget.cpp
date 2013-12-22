@@ -3,7 +3,8 @@
 
 //#include <QPainter>
 CanvasWidget::CanvasWidget(QWidget *parent) :
-    QWidget(parent), selected(NULL), creating(false)
+    QWidget(parent), selected(NULL), creating(false), resizingLU(false),
+    resizingDR(false)
 {
     setMouseTracking(true);
 }
@@ -69,7 +70,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         {
             creating = true;
             selected = new Rectangle(pressedPoint, pressedPoint);
-            selected->setColor(Color(200, 150, 100, 240));
+            selected->setColor(workColor);
             shapes.push_back(selected);
             selected->select(true);
         }
@@ -97,6 +98,8 @@ void CanvasWidget::paintEvent (QPaintEvent *)
 void CanvasWidget::setColor(Color col)
 {
     workColor = col;
-    cout << col;
+    if (selected)
+        selected->setColor(col);
+    update();
 }
 

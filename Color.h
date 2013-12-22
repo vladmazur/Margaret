@@ -19,7 +19,7 @@ public:
     unsigned char blue;
     unsigned char alpha;
     
-    Color(unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, unsigned char a = 255): red(r), green(g), blue(b), alpha(a) {}
+    Color(unsigned char r = 255, unsigned char g = 255, unsigned char b = 255, unsigned char a = 255): red(r), green(g), blue(b), alpha(a) {}
     
     friend std::ostream &operator << (std::ostream &os, const Color &c);
 
