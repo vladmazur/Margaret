@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <Rectangle.h>
+#include "ShapeController.h"
 
 class CanvasWidget : public QWidget
 {
@@ -17,6 +18,7 @@ public:
 signals:
 public slots:
     void setColor(Color col, COLORTYPE type);
+    void deleteFigure();
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);
@@ -25,5 +27,6 @@ protected:
     Point pressedPoint;
     bool creating, resizingLU, resizingDR;
     Color workColor, workPenColor;
+    ShapeController sc;
 };
 #endif // CANVASWIDGET_H

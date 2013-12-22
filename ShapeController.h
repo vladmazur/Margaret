@@ -17,9 +17,8 @@
 
 using namespace std;
 
-//template <typename FigureType>
 class ShapeController {
-private:
+protected:
     vector <Figure *> figures;
     unsigned number;
 public:

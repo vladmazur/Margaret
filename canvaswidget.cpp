@@ -1,7 +1,5 @@
-
 #include "canvaswidget.h"
 
-//#include <QPainter>
 CanvasWidget::CanvasWidget(QWidget *parent) :
     QWidget(parent), selected(NULL), creating(false), resizingLU(false),
     resizingDR(false)
@@ -9,22 +7,20 @@ CanvasWidget::CanvasWidget(QWidget *parent) :
     workColor = Color(255,212,22,255);
     workPenColor = Color(195,25,172,255);
 }
-CanvasWidget::~CanvasWidget() {
-    for (unsigned i = 0; i < shapes.size(); ++i)
-    {
-        delete shapes[i];
-    }
+CanvasWidget::~CanvasWidget()
+{
+        sc.deleteAll();
 }
 void CanvasWidget::mousePressEvent (QMouseEvent * event)
 {
     pressedPoint.x = event->localPos().x();
     pressedPoint.y = event->localPos().y();
     if (selected) selected->select(false); selected = NULL;
-    for (unsigned i = shapes.size(); i > 0; --i)
+    for (unsigned i = sc.getCount(); i > 0; --i)
     {
-        if (shapes[i - 1]->includesPoint(pressedPoint))
+        if (sc.figureAtIndex(i-1)->includesPoint(pressedPoint))
         {
-            selected = shapes[i - 1];
+            selected = sc.figureAtIndex(i-1);
             pressedPoint.x -= selected->getCenter().x;
             pressedPoint.y -= selected->getCenter().y;
             selected->select(true);
@@ -53,7 +49,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         currentPoint.y = event->localPos().y();
         if (creating)
         {
-            shapes.back()->setBounds(pressedPoint, currentPoint);
+            sc.allFigures().back()->setBounds(pressedPoint, currentPoint);
         }
         else if(resizingLU)
         {
@@ -73,7 +69,8 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
             selected = new Rectangle(pressedPoint, pressedPoint);
             selected->setColor(workColor);
             selected->setLineColor(workPenColor);
-            shapes.push_back(selected);
+//            shapes.push_back(selected);
+            sc.addFigure(selected);
             selected->select(true);
         }
         update();
@@ -91,9 +88,9 @@ void CanvasWidget::mouseReleaseEvent (QMouseEvent *)
 void CanvasWidget::paintEvent (QPaintEvent *)
 {
     QPainter painter(this);
-    for (unsigned i = 0; i < shapes.size(); ++i)
+    for (unsigned i = 0; i < sc.getCount(); ++i)
     {
-        shapes[i]->draw(painter);
+        sc.figureAtIndex(i)->draw(painter);
     }
 }
 
@@ -113,3 +110,11 @@ void CanvasWidget::setColor(Color col, COLORTYPE type)
     update();
 }
 
+void CanvasWidget::deleteFigure()
+{
+    if (selected) {
+        sc.deleteByNumber(selected->getNumber());
+        update();
+    }
+
+}

@@ -37,6 +37,19 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>310</y>
+      <width>61</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>del</string>
+    </property>
+   </widget>
    <widget class="CanvasWidget" name="canvas" native="true">
     <property name="geometry">
      <rect>
@@ -60,6 +73,7 @@
    <zorder>groupBox</zorder>
    <zorder>canvas</zorder>
    <zorder>colorPickerButton</zorder>
+   <zorder>pushButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
