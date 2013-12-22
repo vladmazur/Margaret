@@ -22,6 +22,21 @@ public:
     Color(unsigned char r = 0, unsigned char g = 0, unsigned char b = 0, unsigned char a = 255): red(r), green(g), blue(b), alpha(a) {}
     
     friend std::ostream &operator << (std::ostream &os, const Color &c);
+
+    Color& operator*=(const double s)
+    {
+        red *= s;
+        green *= s;
+        blue *= s;
+        alpha *= s;
+        return *this;
+    }
 };
+
+inline Color operator*(Color lhs, const double s)
+{
+  lhs *= s;
+  return lhs;
+}
 
 #endif /* defined(__Lab1__Color__) */

@@ -86,11 +86,21 @@ public:
         Point tl = center - size * 0.5;
         Color f = getColor();
         Color p = getLine().color;
-        if (isSelected()) f = Color(f.red*0.5, f.green*0.5, f.blue*0.5, f.alpha*0.5);
+        if (isSelected()) f *= 0.5;
         painter.setPen(QColor(p.red, p.green, p.blue, p.alpha));
         painter.setBrush(QBrush(QColor(f.red, f.green, f.blue, f.alpha)));
 
         painter.drawRect(tl.x, tl.y, size.x, size.y);
+
+        if (isSelected()) {
+            painter.setPen(QColor(p.red, p.green, p.blue, p.alpha));
+            painter.setBrush(QBrush(QColor(0,0,0,0)));
+
+            painter.drawEllipse(tl.x-5, tl.y-5, 10, 10);
+            painter.drawEllipse(tl.x+size.x-5, tl.y-5, 10, 10);
+            painter.drawEllipse(tl.x-5, tl.y+size.y-5, 10, 10);
+            painter.drawEllipse(tl.x+size.x-5, tl.y+size.y-5, 10, 10);
+        }
     }
 
 };
