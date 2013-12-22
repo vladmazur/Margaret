@@ -12,6 +12,8 @@
 #include <iostream>
 #include <vector>
 
+#include <QPainter>
+
 using namespace std;
 
 #include "Color.h"
@@ -29,6 +31,7 @@ protected:
     Line        line;
     unsigned    number;
     unsigned    type;
+    bool        selected;
     
 public:
     static unsigned count;
@@ -96,11 +99,6 @@ public:
         Point p2 = center + size * 0.5;
         return ((p1.x <= p.x) && (p1.y <= p.y) &&
                 (p2.x >= p.x) && (p2.y >= p.y));
-//        if (p.x >= leftUpperPoint.x && p.x <= rightBottomPoint.x)
-//            if(p.y >= leftUpperPoint.y && p.x <= rightBottomPoint.y)
-//                return true;
-        
-//        return false;
     }
     
     int getType() {
@@ -127,8 +125,44 @@ public:
         number = ++Figure::count;
     }
 
+    void select(bool sel)
+    {
+        selected = sel;
+    }
+
+    bool isSelected() const
+    {
+        return selected;
+    }
+
+    void setBounds(Point p1, Point p2)
+    {
+        center = (p1 + p2) * 0.5;
+        size = (p1 - p2).makePositive();
+
+        leftUpperPoint = p1;
+        rightBottomPoint = p2;
+    }
+
+    void move(Point p)
+    {
+        center = p;
+    }
+
+//    void move(float dx, float dy)
+//    {
+//        this->leftUpperPoint.x += dx;
+//        this->leftUpperPoint.y += dy;
+
+//        this->rightBottomPoint.x += dx;
+//        this->rightBottomPoint.y += dy;
+//    }
+
+    virtual void draw(QPainter & painter) const =0;
+
     void swapCorners(Point *c1, Point *c2)
     {
+//        работает не правильно
         if (c1->x > c2->x) {
             float temp = c2->x;
             c2->x = c1->x; c1->x = temp;

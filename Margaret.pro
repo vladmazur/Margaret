@@ -29,8 +29,6 @@ SOURCES += main.cpp\
     Rectangle.cpp \
     ShapeController.cpp \
     Square.cpp \
-    qrectangle.cpp \
-    qfigure.cpp \
     canvaswidget.cpp
 
 HEADERS  += mainwindow.h \
@@ -44,8 +42,6 @@ HEADERS  += mainwindow.h \
     Rectangle.h \
     ShapeController.h \
     Square.h \
-    qrectangle.h \
-    qfigure.h \
     canvaswidget.h
 
 FORMS    += mainwindow.ui

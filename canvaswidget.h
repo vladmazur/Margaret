@@ -12,8 +12,8 @@ class CanvasWidget : public QWidget
     Q_OBJECT
 public:
     explicit CanvasWidget(QWidget *parent = 0); ~CanvasWidget();
-    std::vector< Rectangle * > shapes;
-    Rectangle* selected;
+    std::vector< Figure * > shapes;
+    Figure* selected;
 signals:
 public slots:
 protected:
