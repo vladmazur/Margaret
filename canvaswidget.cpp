@@ -26,6 +26,18 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
             pressedPoint.x -= selected->getCenter().x;
             pressedPoint.y -= selected->getCenter().y;
             selected->select(true);
+
+            if (selected->inBoundCornersLeftUpper(pressedPoint+selected->getCenter())) {
+                resizingLU = true;
+                pressedPoint.x = event->localPos().x();
+                pressedPoint.y = event->localPos().y();
+            }
+            if (selected->inBoundCornersRightBottom(pressedPoint+selected->getCenter())) {
+                resizingDR = true;
+                pressedPoint.x = event->localPos().x();
+                pressedPoint.y = event->localPos().y();
+            }
+
             break;
         } }
     update();
@@ -41,9 +53,17 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         {
             shapes.back()->setBounds(pressedPoint, currentPoint);
         }
+        else if(resizingLU)
+        {
+                selected->setBounds(currentPoint, selected->getRightBottomPoint());
+        }
+        else if (resizingDR)
+        {
+            selected->setBounds(selected->getLeftUpperPoint(), currentPoint);
+        }
         else if (selected)
         {
-            selected->move(currentPoint - pressedPoint);
+                selected->move(currentPoint - pressedPoint);
         }
         else
         {
@@ -58,9 +78,11 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
 }
 void CanvasWidget::mouseReleaseEvent (QMouseEvent *)
 {
-    if (creating)
+    if (creating || resizingLU || resizingDR)
     {
         creating = false;
+        resizingLU = false;
+        resizingDR = false;
     }
 }
 void CanvasWidget::paintEvent (QPaintEvent *)

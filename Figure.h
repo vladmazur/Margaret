@@ -101,6 +101,24 @@ public:
                 (p2.x >= p.x) && (p2.y >= p.y));
     }
     
+    bool inBoundCornersLeftUpper(Point p)
+    {
+        Point p1 = center - size * 0.5;
+        Point p2 = center - size * 0.5 +Point(10,10);
+
+        return ((p1.x <= p.x) && (p1.y <= p.y) &&
+                (p2.x >= p.x) && (p2.y >= p.y));
+    }
+
+    bool inBoundCornersRightBottom(Point p)
+    {
+        Point p2 = center + size * 0.5;
+        Point p1 = center + size * 0.5 -Point(10,10);
+
+        return ((p1.x <= p.x) && (p1.y <= p.y) &&
+                (p2.x >= p.x) && (p2.y >= p.y));
+    }
+
     int getType() {
         return type;
     }
@@ -147,6 +165,9 @@ public:
     void move(Point p)
     {
         center = p;
+
+        leftUpperPoint = p - size*0.5;
+        rightBottomPoint  = p + size*0.5;
     }
 
 //    void move(float dx, float dy)

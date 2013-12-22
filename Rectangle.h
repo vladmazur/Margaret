@@ -96,10 +96,12 @@ public:
             painter.setPen(QColor(p.red, p.green, p.blue, p.alpha));
             painter.setBrush(QBrush(QColor(0,0,0,0)));
 
-            painter.drawEllipse(tl.x-5, tl.y-5, 10, 10);
-            painter.drawEllipse(tl.x+size.x-5, tl.y-5, 10, 10);
-            painter.drawEllipse(tl.x-5, tl.y+size.y-5, 10, 10);
-            painter.drawEllipse(tl.x+size.x-5, tl.y+size.y-5, 10, 10);
+//            painter.drawEllipse(tl.x-5, tl.y-5, 10, 10);
+            painter.drawRect(tl.x, tl.y, 10, 10);
+            painter.drawRect(tl.x+size.x-10, tl.y+size.y-10, 10, 10);
+//            painter.drawEllipse(tl.x+size.x-5, tl.y-5, 10, 10);
+//            painter.drawEllipse(tl.x-5, tl.y+size.y-5, 10, 10);
+//            painter.drawEllipse(tl.x+size.x-5, tl.y+size.y-5, 10, 10);
         }
     }
 

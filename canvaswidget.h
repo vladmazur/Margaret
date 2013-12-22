@@ -22,6 +22,6 @@ protected:
     virtual void mouseReleaseEvent (QMouseEvent * event);
     virtual void paintEvent (QPaintEvent * event);
     Point pressedPoint;
-    bool creating;
+    bool creating, resizingLU, resizingDR;
 };
 #endif // CANVASWIDGET_H
