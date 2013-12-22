@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     Rectangle.cpp \
     ShapeController.cpp \
     Square.cpp \
-    canvaswidget.cpp
+    canvaswidget.cpp \
+    colorbuttonpicker.cpp
 
 HEADERS  += mainwindow.h \
     Broken.h \
@@ -42,6 +43,7 @@ HEADERS  += mainwindow.h \
     Rectangle.h \
     ShapeController.h \
     Square.h \
-    canvaswidget.h
+    canvaswidget.h \
+    colorbuttonpicker.h
 
 FORMS    += mainwindow.ui

@@ -14,6 +14,29 @@
    <string>Margaret</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>61</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+   </widget>
+   <widget class="ColorButtonPicker" name="colorPickerButton" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>240</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="CanvasWidget" name="canvas" native="true">
     <property name="geometry">
      <rect>
@@ -33,19 +56,10 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>61</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
-   </widget>
+   <zorder>canvas</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>canvas</zorder>
+   <zorder>colorPickerButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -101,7 +115,13 @@
   <customwidget>
    <class>CanvasWidget</class>
    <extends>QWidget</extends>
-   <header location="global">canvaswidget.h</header>
+   <header>canvaswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColorButtonPicker</class>
+   <extends>QWidget</extends>
+   <header>colorbuttonpicker.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
