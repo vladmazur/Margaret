@@ -10,10 +10,14 @@ ColorButtonPicker::ColorButtonPicker(QWidget *parent) :
 
 void ColorButtonPicker::mousePressEvent (QMouseEvent * event)
 {
-    QColor col = QColorDialog::getColor(Qt::white, this);
-    Color c(col.red(), col.green(), col.blue(), col.alpha());
-    setColor(c);
-    update();
+    QColor col = QColorDialog::getColor(QColor(color.red, color.green, color.blue, color.alpha),
+                                        this, "Choose color",
+                                        QColorDialog::ShowAlphaChannel);
+    if (col.isValid()) {
+        Color c(col.red(), col.green(), col.blue(), col.alpha());
+        setColor(c);
+        update();
+    }
 }
 
 void ColorButtonPicker::paintEvent (QPaintEvent *)
