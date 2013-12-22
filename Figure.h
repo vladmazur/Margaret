@@ -67,6 +67,21 @@ public:
     {
         line = line_;
     }
+
+    void setLineColor(Color col)
+    {
+        line.color = col;
+    }
+
+    void setLineWidth(int width)
+    {
+        line.thickness = width;
+    }
+
+    void setLineStyle(LineStyle style)
+    {
+        line.style = style;
+    }
     
     void setColor(Color color_) {
         backGroundColor = color_;

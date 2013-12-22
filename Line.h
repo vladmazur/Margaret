@@ -26,7 +26,7 @@ public:
     Color       color;
     LineStyle   style;
     
-    Line() : thickness(1), color(Color()), style(LineStyleSolid) {}
+    Line() : thickness(3), color(Color()), style(LineStyleSolid) {}
     Line(int thick, Color col, LineStyle styl) : thickness(thick), color(col), style(styl) {}
     
     friend std::ostream &operator << (std::ostream &os, const Line &l);

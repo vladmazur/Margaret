@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+typedef enum {CTBACKGROUND, CTPEN} COLORTYPE;
+
 class Color {
     
 public:

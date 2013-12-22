@@ -6,7 +6,8 @@ CanvasWidget::CanvasWidget(QWidget *parent) :
     QWidget(parent), selected(NULL), creating(false), resizingLU(false),
     resizingDR(false)
 {
-    setMouseTracking(true);
+    workColor = Color(255,212,22,255);
+    workPenColor = Color(195,25,172,255);
 }
 CanvasWidget::~CanvasWidget() {
     for (unsigned i = 0; i < shapes.size(); ++i)
@@ -71,6 +72,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
             creating = true;
             selected = new Rectangle(pressedPoint, pressedPoint);
             selected->setColor(workColor);
+            selected->setLineColor(workPenColor);
             shapes.push_back(selected);
             selected->select(true);
         }
@@ -95,11 +97,19 @@ void CanvasWidget::paintEvent (QPaintEvent *)
     }
 }
 
-void CanvasWidget::setColor(Color col)
+void CanvasWidget::setColor(Color col, COLORTYPE type)
 {
-    workColor = col;
-    if (selected)
-        selected->setColor(col);
+    cout << col;
+    if (type == CTBACKGROUND) {
+        workColor = col;
+        if (selected)
+            selected->setColor(col);
+    }
+    else {
+        workPenColor = col;
+        if (selected)
+            selected->setLineColor(col);
+    }
     update();
 }
 
