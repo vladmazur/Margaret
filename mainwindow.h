@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+//#include "QRectangle.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +21,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+//    QGraphicsScene *scene;
+//    QGraphicsEllipseItem *ellipse;
+//    QGraphicsRectItem *rectangle;
+//    QGraphicsTextItem *text;
+//    QGraphicsPolygonItem *poly;
+
+//    QRecrangle
 };
 
 #endif // MAINWINDOW_H

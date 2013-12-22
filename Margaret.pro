@@ -5,7 +5,11 @@
 #-------------------------------------------------
 
 QT       += core gui
-QMAKE_CXXFLAGS += -std=c++11
+#QMAKE_CXXFLAGS = -stdlib=libc++
+#QMAKE_CXXFLAGS += -stdlib=libc++
+CONFIG   += c++11
+QMAKE_CXXFLAGS += -stdlib=libc++
+QMAKE_CXXFLAGS += -mmacosx-version-min=10.7
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,7 +28,10 @@ SOURCES += main.cpp\
     Polygon.cpp \
     Rectangle.cpp \
     ShapeController.cpp \
-    Square.cpp
+    Square.cpp \
+    qrectangle.cpp \
+    qfigure.cpp \
+    canvaswidget.cpp
 
 HEADERS  += mainwindow.h \
     Broken.h \
@@ -36,6 +43,9 @@ HEADERS  += mainwindow.h \
     Polygon.h \
     Rectangle.h \
     ShapeController.h \
-    Square.h
+    Square.h \
+    qrectangle.h \
+    qfigure.h \
+    canvaswidget.h
 
 FORMS    += mainwindow.ui

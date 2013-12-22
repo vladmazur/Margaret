@@ -13,9 +13,11 @@
 
 #include "Figure.h"
 
+#include <QPainter>
+
 class Rectangle: public Figure {
 protected:
-
+    bool selected;
 public:
     Point leftBottomPoint() const
     {
@@ -88,6 +90,45 @@ public:
     {
         leftUpperPoint = Point(10, 20);
         rightBottomPoint = Point(30, 40);
+    }
+
+    void setBounds(Point p1, Point p2)
+    {
+
+        center = (p1 + p2) * 0.5;
+        size = (p1 - p2).makePositive();
+//        leftUpperPoint = p1;
+//        rightBottomPoint = p2;
+//        swapCorners(&leftUpperPoint, &rightBottomPoint);
+    }
+
+    void select(bool sel)
+    {
+        selected = sel;
+    }
+
+    bool isSelected() const
+    {
+        return selected;
+    }
+
+    void draw(QPainter & painter) const
+    {
+        Point tl = center - size * 0.5;
+        Color f = getColor();
+        Color p = getLine().color;
+//        double f=1;
+        if (isSelected()) f = Color(f.red*0.5, f.green*0.5, f.blue*0.5, f.alpha*0.5);
+        painter.setPen(QColor(p.red, p.green, p.blue, p.alpha));
+        painter.setBrush(QBrush(QColor(f.red, f.green, f.blue, f.alpha)));
+
+        painter.drawRect(tl.x, tl.y, size.x, size.y);
+    }
+
+    void move(Point p)
+    {
+        // двигать центр сюда
+        center = p;
     }
 };
 

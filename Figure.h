@@ -24,6 +24,7 @@ class Figure {
 protected:
     Point       leftUpperPoint, rightBottomPoint;
     Point       center;
+    Point       size; // ширина и высота
     Color       backGroundColor;
     Line        line;
     unsigned    number;
@@ -48,7 +49,7 @@ public:
         rightBottomPoint = point;
     }
 
-    Line getLine() {
+    Line getLine() const {
         return line;
     }
     
@@ -68,7 +69,7 @@ public:
         backGroundColor = color_;
     }
     
-    Color getColor() {
+    Color getColor() const {
         return backGroundColor;
     }
     
@@ -91,11 +92,15 @@ public:
     
     bool includesPoint(Point p)
     {
-        if (p.x >= leftUpperPoint.x && p.x <= rightBottomPoint.x)
-            if(p.y >= leftUpperPoint.y && p.x <= rightBottomPoint.y)
-                return true;
+        Point p1 = center - size * 0.5;
+        Point p2 = center + size * 0.5;
+        return ((p1.x <= p.x) && (p1.y <= p.y) &&
+                (p2.x >= p.x) && (p2.y >= p.y));
+//        if (p.x >= leftUpperPoint.x && p.x <= rightBottomPoint.x)
+//            if(p.y >= leftUpperPoint.y && p.x <= rightBottomPoint.y)
+//                return true;
         
-        return false;
+//        return false;
     }
     
     int getType() {
@@ -114,15 +119,24 @@ public:
     
     Point getCenter() const
     {
-        float x, y;
-        x = leftUpperPoint.x + getWidth()/2;
-        y = leftUpperPoint.y + getHeight()/2;
-        return Point(x, y);
+       return center;
     }
 
     Figure()
     {
         number = ++Figure::count;
+    }
+
+    void swapCorners(Point *c1, Point *c2)
+    {
+        if (c1->x > c2->x) {
+            float temp = c2->x;
+            c2->x = c1->x; c1->x = temp;
+        }
+        if (c1->y > c2->y) {
+            float temp = c2->y;
+            c2->y = c1->y; c1->y = temp;
+        }
     }
 };
 

@@ -23,7 +23,52 @@ public:
     
     friend std::istream &operator>>(std::istream &input,Point &p);
     friend std::ostream &operator << (std::ostream &os, const Point &p);
-    
+
+    Point& operator+=(const Point& poi)
+    {
+        x+=poi.x;
+        y+=poi.y;
+        return *this;
+    }
+
+    Point& operator-=(const Point& poi)
+    {
+        x-=poi.x;
+        y-=poi.y;
+        return *this;
+    }
+
+    Point& operator*=(const double s)
+    {
+        x *= s;
+        y *= s;
+        return *this;
+    }
+
+    Point makePositive()
+    {
+        if (x < 0) x*=-1;
+        if (y < 0) y*=-1;
+        return *this;
+    }
 };
+
+inline Point operator+(Point lhs, const Point& rhs)
+{
+  lhs += rhs;
+  return lhs;
+}
+
+inline Point operator-(Point lhs, const Point& rhs)
+{
+  lhs -= rhs;
+  return lhs;
+}
+
+inline Point operator*(Point lhs, const double s)
+{
+  lhs *= s;
+  return lhs;
+}
 
 #endif /* defined(__Lab1__Point__) */
