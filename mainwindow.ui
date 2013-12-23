@@ -68,8 +68,17 @@
     <property name="mouseTracking">
      <bool>true</bool>
     </property>
+    <widget class="GridWidget" name="grid" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>421</width>
+       <height>181</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
-   <zorder>canvas</zorder>
    <zorder>groupBox</zorder>
    <zorder>canvas</zorder>
    <zorder>colorPickerButton</zorder>
@@ -136,6 +145,12 @@
    <class>ColorButtonPicker</class>
    <extends>QWidget</extends>
    <header>colorbuttonpicker.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GridWidget</class>
+   <extends>QWidget</extends>
+   <header>gridwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

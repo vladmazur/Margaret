@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     ShapeController.cpp \
     Square.cpp \
     canvaswidget.cpp \
-    colorbuttonpicker.cpp
+    colorbuttonpicker.cpp \
+    gridwidget.cpp
 
 HEADERS  += mainwindow.h \
     Broken.h \
@@ -44,6 +45,7 @@ HEADERS  += mainwindow.h \
     ShapeController.h \
     Square.h \
     canvaswidget.h \
-    colorbuttonpicker.h
+    colorbuttonpicker.h \
+    gridwidget.h
 
 FORMS    += mainwindow.ui

@@ -2,7 +2,7 @@
 
 CanvasWidget::CanvasWidget(QWidget *parent) :
     QWidget(parent), selected(NULL), creating(false), resizingLU(false),
-    resizingDR(false)
+    resizingDR(false), gridShow(false), gridAligment(false)
 {
     workColor = Color(255,212,22,255);
     workPenColor = Color(195,25,172,255);
@@ -91,12 +91,11 @@ void CanvasWidget::paintEvent (QPaintEvent *)
     for (unsigned i = 0; i < sc.getCount(); ++i)
     {
         sc.figureAtIndex(i)->draw(painter);
-    }
+    }    
 }
 
 void CanvasWidget::setColor(Color col, COLORTYPE type)
 {
-    cout << col;
     if (type == CTBACKGROUND) {
         workColor = col;
         if (selected)

@@ -28,5 +28,6 @@ protected:
     bool creating, resizingLU, resizingDR;
     Color workColor, workPenColor;
     ShapeController sc;
+    bool gridShow, gridAligment;
 };
 #endif // CANVASWIDGET_H
