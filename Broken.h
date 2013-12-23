@@ -17,11 +17,7 @@ class Broken : public Figure
 {
 protected:
     vector<Point> vertexes;
-    
-    
-public:
-//    vector<Point> getVertexes() const;
-    
+public:   
     void addPoint(Point poi)
     {
         vertexes.push_back(poi);
@@ -83,6 +79,11 @@ public:
     void print()
     {
         cout << *this;
+    }
+
+    void draw(QPainter & painter) const
+    {
+
     }
     
 };

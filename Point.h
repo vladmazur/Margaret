@@ -51,6 +51,13 @@ public:
         if (y < 0) y*=-1;
         return *this;
     }
+
+    Point& operator =(Point b)
+    {
+        x= b.x;
+        y= b.y;
+        return *this;
+    }
 };
 
 inline Point operator+(Point lhs, const Point& rhs)

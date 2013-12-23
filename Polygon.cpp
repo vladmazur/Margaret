@@ -15,7 +15,7 @@
 
 //unsigned Polygon::count = 0;
 
-unsigned Polygon::getCountOfCorners()
+unsigned Polygon::getCountOfCorners() const
 {
     return cornersCount;
 }
@@ -34,6 +34,8 @@ void Polygon::makeVertexes()
 {
     vertexes.clear();
     int n=0;
+    Square sq(leftUpperPoint, rightBottomPoint);
+    Radius = sq.getSideSize() / 2;
     for (float alp=90+alpha/2; n++ < cornersCount; alp= alp+alpha)
     {
         float x = Radius * cos(rad(alp));
@@ -51,6 +53,8 @@ Polygon::Polygon(Point leftUpper, Point rightBottom, unsigned newCornersCount, C
     rightBottomPoint = sq.rightBottomPoint;
     center = sq.getCenter();
     Radius = sq.getSideSize() / 2;
+    backGroundColor = newColor;
+    line = newLine;
     setCountOfCorners(newCornersCount);
 }
 
@@ -71,6 +75,14 @@ void Polygon::move(float dx, float dy)
     rightBottomPoint.y += dy;
     center.x += dx;
     center.y += dy;
+}
+
+void Polygon::move(Point p)
+{
+    center = p;
+    leftUpperPoint = p - size*0.5;
+    rightBottomPoint  = p + size*0.5;
+    makeVertexes();
 }
 
 void Polygon::scale(float scale)

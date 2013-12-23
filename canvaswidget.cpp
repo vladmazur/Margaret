@@ -66,10 +66,26 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         else
         {
             creating = true;
-            selected = new Rectangle(pressedPoint, pressedPoint);
+
+            switch (workFigure) {
+            case FSRect: {
+                selected = new Rectangle(pressedPoint, pressedPoint);
+                break; }
+            case FSPolygon: {
+                selected = new Polygon(pressedPoint, pressedPoint+Point(50,50), 5, Color(), Line());
+                break; }
+            case FSBroken: {
+                std::vector<Point>pois;
+                selected = new Broken(pois);
+                break; }
+            default: {
+                selected = new Rectangle(pressedPoint, pressedPoint);
+                break; }
+            }
+
+//            selected = new Polygon(pressedPoint, pressedPoint, 5, Color(), Line());
             selected->setColor(workColor);
             selected->setLineColor(workPenColor);
-//            shapes.push_back(selected);
             sc.addFigure(selected);
             selected->select(true);
         }
@@ -115,5 +131,9 @@ void CanvasWidget::deleteFigure()
         sc.deleteByNumber(selected->getNumber());
         update();
     }
+}
 
+void CanvasWidget::changeFigure(FIGURESELECTED figure)
+{
+    workFigure = figure;
 }

@@ -168,6 +168,9 @@ public:
         return selected;
     }
 
+    virtual void makeVertexes()
+    {}
+
     void setBounds(Point p1, Point p2)
     {
         center = (p1 + p2) * 0.5;
@@ -175,24 +178,17 @@ public:
 
         leftUpperPoint = p1;
         rightBottomPoint = p2;
+
+        makeVertexes();
     }
 
-    void move(Point p)
+    virtual void move(Point p)
     {
         center = p;
 
         leftUpperPoint = p - size*0.5;
         rightBottomPoint  = p + size*0.5;
     }
-
-//    void move(float dx, float dy)
-//    {
-//        this->leftUpperPoint.x += dx;
-//        this->leftUpperPoint.y += dy;
-
-//        this->rightBottomPoint.x += dx;
-//        this->rightBottomPoint.y += dy;
-//    }
 
     virtual void draw(QPainter & painter) const =0;
 

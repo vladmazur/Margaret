@@ -5,8 +5,12 @@
 #include <QPaintEvent>
 #include <vector>
 
-#include <Rectangle.h>
+#include "Rectangle.h"
+#include "Polygon.h"
+#include "Broken.h"
 #include "ShapeController.h"
+
+typedef enum {FSRect, FSPolygon, FSBroken} FIGURESELECTED;
 
 class CanvasWidget : public QWidget
 {
@@ -19,6 +23,7 @@ signals:
 public slots:
     void setColor(Color col, COLORTYPE type);
     void deleteFigure();
+    void changeFigure(FIGURESELECTED figure);
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);
@@ -29,5 +34,6 @@ protected:
     Color workColor, workPenColor;
     ShapeController sc;
     bool gridShow, gridAligment;
+    FIGURESELECTED workFigure;
 };
 #endif // CANVASWIDGET_H

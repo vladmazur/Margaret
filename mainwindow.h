@@ -22,6 +22,12 @@ public:
 private slots:
     void on_pushButton_pressed();
 
+    void on_rectangleBu_pressed();
+
+    void on_polygonBu_pressed();
+
+    void on_brokenBu_pressed();
+
 private:
     Ui::MainWindow *ui;
 };

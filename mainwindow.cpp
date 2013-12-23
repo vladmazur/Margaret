@@ -22,3 +22,18 @@ void MainWindow::on_pushButton_pressed()
 {
     ui->canvas->deleteFigure();
 }
+
+void MainWindow::on_rectangleBu_pressed()
+{
+    ui->canvas->changeFigure(FSRect);
+}
+
+void MainWindow::on_polygonBu_pressed()
+{
+    ui->canvas->changeFigure(FSPolygon);
+}
+
+void MainWindow::on_brokenBu_pressed()
+{
+    ui->canvas->changeFigure(FSBroken);
+}

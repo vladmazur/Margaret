@@ -28,7 +28,7 @@ private:
 public:
     vector<Point> getVertexes() const;
     
-    unsigned getCountOfCorners();
+    unsigned getCountOfCorners() const;
     void setCountOfCorners(unsigned newCornersCount);
     
     void scale(float scale);
@@ -42,6 +42,40 @@ public:
     
     Polygon(): Polygon(Point(0,0), Point(20,20), 6, Color(), Line()) {}
     Polygon(Point leftUpper, Point rightBottom, unsigned newCornersCount, Color newColor, Line newLine);
+
+    void move(Point p);
+
+    void draw(QPainter & painter) const
+    {
+
+
+        Point tl = center - size * 0.5;
+        Color f = getColor();
+        Color p = getLine().color;
+        if (isSelected()) f *= 0.5;
+        QPen pen(QBrush(QColor(p.red, p.green, p.blue, p.alpha)), line.thickness);
+        painter.setPen(pen);
+        painter.setBrush(QBrush(QColor(f.red, f.green, f.blue, f.alpha)));
+
+        QPoint *pois = new QPoint[getCountOfCorners()];
+        std::vector<Point> vertxs = getVertexes();
+        for (int i=0; i<getCountOfCorners(); i++) {
+            pois[i] = QPoint(vertxs[i].x, vertxs[i].y);
+//            cout << vertxs[i];
+        }
+//        cout<< "==\n";
+
+        painter.drawConvexPolygon(pois, getCountOfCorners());
+
+//        painter.drawRect(tl.x, tl.y, size.x, size.y);
+
+        if (isSelected()) {
+            painter.setPen(QColor(p.red, p.green, p.blue, p.alpha));
+            painter.setBrush(QBrush(QColor(0,0,0,0)));
+            painter.drawRect(tl.x, tl.y, 10, 10);
+            painter.drawRect(tl.x+size.x-10, tl.y+size.y-10, 10, 10);
+        }
+    }
     
     friend std::ostream &operator << (std::ostream &os, const Polygon &p);
 };
