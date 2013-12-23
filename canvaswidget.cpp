@@ -82,10 +82,10 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
                 selected = new Rectangle(pressedPoint, pressedPoint);
                 break; }
             }
-
-//            selected = new Polygon(pressedPoint, pressedPoint, 5, Color(), Line());
             selected->setColor(workColor);
+            selected->setLineStyle(workLineStyle);
             selected->setLineColor(workPenColor);
+            selected->setLineWidth(workLineWidth);
             sc.addFigure(selected);
             selected->select(true);
         }
@@ -136,4 +136,22 @@ void CanvasWidget::deleteFigure()
 void CanvasWidget::changeFigure(FIGURESELECTED figure)
 {
     workFigure = figure;
+}
+
+void CanvasWidget::changeLineStyle(LineStyle style)
+{
+    workLineStyle = style;
+    if (selected) {
+        selected->setLineStyle(style);
+        update();
+    }
+}
+
+void CanvasWidget::changeLineWidth(int width)
+{
+    workLineWidth = width;
+    if (selected) {
+        selected->setLineWidth(width);
+        update();
+    }
 }

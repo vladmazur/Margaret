@@ -47,13 +47,21 @@ public:
 
     void draw(QPainter & painter) const
     {
-
-
         Point tl = center - size * 0.5;
         Color f = getColor();
         Color p = getLine().color;
         if (isSelected()) f *= 0.5;
         QPen pen(QBrush(QColor(p.red, p.green, p.blue, p.alpha)), line.thickness);
+        switch (line.style) {
+        case LineStyleDotted:
+            pen.setStyle(Qt::DotLine);
+            break;
+        case LineStyleDashed:
+            pen.setStyle(Qt::DashLine);
+            break;
+        default:
+            break;
+        }
         painter.setPen(pen);
         painter.setBrush(QBrush(QColor(f.red, f.green, f.blue, f.alpha)));
 
@@ -61,13 +69,9 @@ public:
         std::vector<Point> vertxs = getVertexes();
         for (int i=0; i<getCountOfCorners(); i++) {
             pois[i] = QPoint(vertxs[i].x, vertxs[i].y);
-//            cout << vertxs[i];
         }
-//        cout<< "==\n";
 
         painter.drawConvexPolygon(pois, getCountOfCorners());
-
-//        painter.drawRect(tl.x, tl.y, size.x, size.y);
 
         if (isSelected()) {
             painter.setPen(QColor(p.red, p.green, p.blue, p.alpha));

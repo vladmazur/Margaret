@@ -24,6 +24,8 @@ public slots:
     void setColor(Color col, COLORTYPE type);
     void deleteFigure();
     void changeFigure(FIGURESELECTED figure);
+    void changeLineStyle(LineStyle style);
+    void changeLineWidth(int width);
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);
@@ -32,6 +34,8 @@ protected:
     Point pressedPoint;
     bool creating, resizingLU, resizingDR;
     Color workColor, workPenColor;
+    LineStyle workLineStyle;
+    int workLineWidth=3;
     ShapeController sc;
     bool gridShow, gridAligment;
     FIGURESELECTED workFigure;

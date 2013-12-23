@@ -88,6 +88,16 @@ public:
         Color p = getLine().color;
         if (isSelected()) f *= 0.5;
         QPen pen(QBrush(QColor(p.red, p.green, p.blue, p.alpha)), line.thickness);
+        switch (line.style) {
+        case LineStyleDotted:
+            pen.setStyle(Qt::DotLine);
+            break;
+        case LineStyleDashed:
+            pen.setStyle(Qt::DashLine);
+            break;
+        default:
+            break;
+        }
         painter.setPen(pen);
         painter.setBrush(QBrush(QColor(f.red, f.green, f.blue, f.alpha)));
 

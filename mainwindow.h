@@ -28,6 +28,10 @@ private slots:
 
     void on_brokenBu_pressed();
 
+    void on_comboBox_currentIndexChanged(int index);
+
+    void on_LineWidthChooser_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 };

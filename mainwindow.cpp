@@ -37,3 +37,13 @@ void MainWindow::on_brokenBu_pressed()
 {
     ui->canvas->changeFigure(FSBroken);
 }
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+    ui->canvas->changeLineStyle(LineStyle(index));
+}
+
+void MainWindow::on_LineWidthChooser_valueChanged(int arg1)
+{
+    ui->canvas->changeLineWidth(arg1);
+}

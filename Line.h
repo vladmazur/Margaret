@@ -16,7 +16,6 @@ typedef enum {
     LineStyleSolid,
     LineStyleDotted,
     LineStyleDashed,
-    LineStyleDoubleLine
 } LineStyle;
 
 class Line {
