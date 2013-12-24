@@ -39,7 +39,7 @@ void ColorButtonPicker::mousePressEvent (QMouseEvent * event)
 void ColorButtonPicker::paintEvent (QPaintEvent *)
 {
     QPainter painter(this);
-    painter.setRenderHint( QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::Antialiasing);
 
     painter.setPen(Qt::black/*QColor(penColor.red, penColor.green, penColor.blue, penColor.alpha)*/);
     painter.setBrush(QBrush(QColor(penColor.red, penColor.green, penColor.blue, penColor.alpha)));

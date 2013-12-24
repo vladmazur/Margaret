@@ -48,5 +48,6 @@ protected:
     bool gridShow, gridAligment;
     FIGURESELECTED workFigure;
     int workPolygonCorCount=5;
+    bool isInSpecialBrokenMode = false;
 };
 #endif // CANVASWIDGET_H

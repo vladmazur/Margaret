@@ -1,6 +1,8 @@
 #include "canvaswidget.h"
 //#include "mainwindow.h"
 
+int clickCount = 0;
+
 CanvasWidget::CanvasWidget(QWidget *parent) :
     QWidget(parent), selected(NULL), creating(false), resizingLU(false),
     resizingDR(false), gridShow(false), gridAligment(false)
@@ -16,45 +18,85 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
 {
     pressedPoint.x = event->localPos().x();
     pressedPoint.y = event->localPos().y();
-    if (selected) selected->select(false); selected = NULL;
-//    emit setPolygonSettingsVisible(false);
-    for (unsigned i = sc.getCount(); i > 0; --i)
-    {
-        if (sc.figureAtIndex(i-1)->includesPoint(pressedPoint))
-        {
-            selected = sc.figureAtIndex(i-1);
-            pressedPoint.x -= selected->getCenter().x;
-            pressedPoint.y -= selected->getCenter().y;
-            selected->select(true);
 
-            if (selected->inBoundCornersLeftUpper(pressedPoint+selected->getCenter())) {
-                resizingLU = true;
-                pressedPoint.x = event->localPos().x();
-                pressedPoint.y = event->localPos().y();
+    if(isInSpecialBrokenMode)
+    {
+        if (event->button() == Qt::RightButton) {
+            isInSpecialBrokenMode = false;
+            clickCount = 0;
+        }
+        else
+        {
+            pressedPoint.x = event->localPos().x();
+            pressedPoint.y = event->localPos().y();
+
+            if (clickCount++ == 0)
+            {
+                if (selected)
+                    selected->select(false);
+                selected = NULL;
+                std::vector<Point>pois;
+                pois.push_back(pressedPoint);
+                selected = new Broken(pois);
+                selected->setType(FTBroken);
+                emit setReflectionSettings(false, false);
+                selected->setColor(workColor);
+                selected->setLineStyle(workLineStyle);
+                selected->setLineColor(workPenColor);
+                selected->setLineWidth(workLineWidth);
+                sc.addFigure(selected);
+                selected->select(true);
             }
-            if (selected->inBoundCornersRightBottom(pressedPoint+selected->getCenter())) {
-                resizingDR = true;
-                pressedPoint.x = event->localPos().x();
-                pressedPoint.y = event->localPos().y();
+            else {
+                ((Broken *)selected)->addPoint(pressedPoint);
             }
-            break;
         }
     }
-
-    if (selected)
+    else
     {
-        emit changingLineWidth(selected->getLine().thickness);
-        emit changingLineStyle(selected->getLine().style);
-        emit changingColors(selected->getColor(), selected->getLine().color);
-        emit setReflectionSettings(selected->getReflectedVer(), selected->getReflectedGor());
+        if (selected)
+            selected->select(false);
+        selected = NULL;
+    //    emit setPolygonSettingsVisible(false);
+        for (unsigned i = sc.getCount(); i > 0; --i)
+        {
+            if (sc.figureAtIndex(i-1)->includesPoint(pressedPoint))
+            {
+                selected = sc.figureAtIndex(i-1);
+                pressedPoint.x -= selected->getCenter().x;
+                pressedPoint.y -= selected->getCenter().y;
+                selected->select(true);
 
-        if (selected->getType() == FTPolygon)
-            emit setPolygonSettingsVisible(true);
-        else
-            emit setPolygonSettingsVisible(false);
+                if (selected->inBoundCornersLeftUpper(pressedPoint+selected->getCenter())) {
+                    resizingLU = true;
+                    pressedPoint.x = event->localPos().x();
+                    pressedPoint.y = event->localPos().y();
+                }
+                if (selected->inBoundCornersRightBottom(pressedPoint+selected->getCenter())) {
+                    resizingDR = true;
+                    pressedPoint.x = event->localPos().x();
+                    pressedPoint.y = event->localPos().y();
+                }
+                break;
+            }
+        }
+
+        if (selected)
+        {
+            emit changingLineWidth(selected->getLine().thickness);
+            emit changingLineStyle(selected->getLine().style);
+            emit changingColors(selected->getColor(), selected->getLine().color);
+            emit setReflectionSettings(selected->getReflectedVer(), selected->getReflectedGor());
+
+            if (selected->getType() == FTPolygon)
+                emit setPolygonSettingsVisible(true);
+            else
+                emit setPolygonSettingsVisible(false);
+        }
     }
     update();
 }
+
 void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
 {
     if ((event->buttons()) & Qt::LeftButton)
@@ -68,7 +110,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         }
         else if(resizingLU)
         {
-                selected->setBounds(currentPoint, selected->getRightBottomPoint());
+            selected->setBounds(currentPoint, selected->getRightBottomPoint());
         }
         else if (resizingDR)
         {
@@ -94,9 +136,8 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
                 emit setPolygonSettingsVisible(true);
                 break; }
             case FSBroken: {
-                std::vector<Point>pois;
-                selected = new Broken(pois);
-                selected->setType(FTBroken);
+//                update();
+                return;
                 break; }
             default: {
                 selected = new Rectangle(pressedPoint, pressedPoint);
@@ -125,6 +166,7 @@ void CanvasWidget::mouseReleaseEvent (QMouseEvent *)
 void CanvasWidget::paintEvent (QPaintEvent *)
 {
     QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
     for (unsigned i = 0; i < sc.getCount(); ++i)
     {
         sc.figureAtIndex(i)->makeVertexes();
@@ -158,6 +200,12 @@ void CanvasWidget::deleteFigure()
 void CanvasWidget::changeFigure(FIGURESELECTED figure)
 {
     workFigure = figure;
+    if (figure == FTBroken) {
+        isInSpecialBrokenMode = true;
+        clickCount = 0;
+    }
+    else
+        isInSpecialBrokenMode = false;
 }
 
 void CanvasWidget::changeLineStyle(LineStyle style)

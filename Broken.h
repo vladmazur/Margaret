@@ -21,10 +21,10 @@ public:
     void addPoint(Point poi)
     {
         vertexes.push_back(poi);
-        makeCorners();
+        makeVertexes();
     }
     
-    void makeCorners()
+    void makeVertexes()
     {
         float minX=vertexes[0].x, minY=vertexes[0].y;
         for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
@@ -32,35 +32,37 @@ public:
             if(it->y < minY) minY = it->y;
         }
         leftUpperPoint = Point(minX, minY);
-        
+
         float maxX=vertexes[0].x, maxY=vertexes[0].y;
         for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
             if(it->x > maxX) maxX = it->x;
             if(it->y > maxY) maxY = it->y;
         }
         rightBottomPoint = Point(maxX, maxY);
+
+        center = (leftUpperPoint + rightBottomPoint) * 0.5;
+        size = (leftUpperPoint - rightBottomPoint).makePositive();
     }
     
     Broken()
-    {
-        addPoint(Point(0,0));
-        addPoint(Point(10,10));
-        addPoint(Point(15,5));
-    }
+    {}
     
     Broken(const vector<Point> points)
     {
         this->vertexes = points;
-        makeCorners();
+        makeVertexes();
     }
     
     void reflect(REFLECT_TYPE type) {}
-    void move(float dx, float dy) {}
-    void scale(float scale_) {}
     
     vector<Point> getVertexes() const
     {
         return vertexes;
+    }
+
+    unsigned getCountofVertexes() const
+    {
+        return vertexes.size();
     }
     
     friend std::ostream &operator << (std::ostream &os, const Broken &b)
@@ -81,8 +83,80 @@ public:
         cout << *this;
     }
 
+    virtual void drawMarkers(QPainter & painter) const
+    {
+        double markerSize = size.x/20;
+        markerSize = min(10.0, markerSize);
+        painter.setPen(QColor(0,0,0,255));
+        painter.setBrush(QBrush(QColor(255,0,255,255)));
+
+        painter.drawRect(leftUpperPoint.x, leftUpperPoint.y,
+                         markerSize, markerSize);
+        painter.drawRect(rightBottomPoint.x-markerSize,
+                         rightBottomPoint.y-markerSize,
+                         markerSize, markerSize);
+
+        painter.setBrush(QBrush(QColor(0,0,0,255)));
+        double r = line.thickness*2;
+        for (unsigned i=0; i<getCountofVertexes(); i++) {
+            painter.drawEllipse(vertexes[i].x- r/2, vertexes[i].y- r/2, r, r);
+        }
+    }
+
     void draw(QPainter & painter) const
     {
+        QPoint *pois = new QPoint[getCountofVertexes()];
+        std::vector<Point> vertxs = getVertexes();
+        for (int i=0; i<getCountofVertexes(); i++) {
+            pois[i] = QPoint(vertxs[i].x, vertxs[i].y);
+        }
+        Color f = getColor();
+        Color p = getLine().color;
+        if (isSelected()) f *= 0.5;
+        QPen pen(QBrush(QColor(p.red, p.green, p.blue, p.alpha)), line.thickness);
+        switch (line.style) {
+        case LineStyleDotted:
+            pen.setStyle(Qt::DotLine);
+            break;
+        case LineStyleDashed:
+            pen.setStyle(Qt::DashLine);
+            break;
+        default:
+            break;
+        }
+        painter.setPen(pen);
+        painter.setBrush(QBrush(QColor(f.red, f.green, f.blue, f.alpha)));
+
+        painter.drawPolyline(pois, getCountofVertexes());
+
+        if(selected)
+            drawMarkers(painter);
+    }
+
+    void move(Point p)
+    {
+        Point delta = p - center;
+        center = p;
+
+        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+            (*it) = (*it)+delta;
+        }
+
+        float minX=vertexes[0].x, minY=vertexes[0].y;
+        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+            if(it->x < minX) minX = it->x;
+            if(it->y < minY) minY = it->y;
+        }
+        leftUpperPoint = Point(minX, minY);
+
+        float maxX=vertexes[0].x, maxY=vertexes[0].y;
+        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+            if(it->x > maxX) maxX = it->x;
+            if(it->y > maxY) maxY = it->y;
+        }
+        rightBottomPoint = Point(maxX, maxY);
+
+//        makeVertexes();
 
     }
     
