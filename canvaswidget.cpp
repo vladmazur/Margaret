@@ -80,7 +80,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
                 selected = new Rectangle(pressedPoint, pressedPoint);
                 break; }
             case FSPolygon: {
-                selected = new Polygon(pressedPoint, pressedPoint+Point(50,50), 5, Color(), Line());
+                selected = new Polygon(pressedPoint, pressedPoint/*+Point(50,50)*/, 5, Color(), Line());
                 break; }
             case FSBroken: {
                 std::vector<Point>pois;

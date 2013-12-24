@@ -49,8 +49,6 @@ Square::Square(Point leftUp, Point rightBo)
     
     leftUpperPoint = leftUp;
     rightBottomPoint = rightBo;
-    
-//    circle = new Circle(getCenter(), sideSize /2, Color());
 }
 
 Square::Square(Point leftUp, float size, Color backGrCol, Line lin)

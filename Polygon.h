@@ -73,12 +73,8 @@ public:
 
         painter.drawConvexPolygon(pois, getCountOfCorners());
 
-        if (isSelected()) {
-            painter.setPen(QColor(p.red, p.green, p.blue, p.alpha));
-            painter.setBrush(QBrush(QColor(0,0,0,0)));
-            painter.drawRect(tl.x, tl.y, 10, 10);
-            painter.drawRect(tl.x+size.x-10, tl.y+size.y-10, 10, 10);
-        }
+        if (isSelected())
+            drawMarkers(painter);
     }
     
     friend std::ostream &operator << (std::ostream &os, const Polygon &p);

@@ -118,8 +118,10 @@ public:
     
     bool inBoundCornersLeftUpper(Point p)
     {
+        double markerSize = size.x/10;
+        markerSize = max(10.0, markerSize);
         Point p1 = center - size * 0.5;
-        Point p2 = center - size * 0.5 +Point(10,10);
+        Point p2 = center - size * 0.5 +Point(markerSize, markerSize);
 
         return ((p1.x <= p.x) && (p1.y <= p.y) &&
                 (p2.x >= p.x) && (p2.y >= p.y));
@@ -127,8 +129,10 @@ public:
 
     bool inBoundCornersRightBottom(Point p)
     {
+        double markerSize = size.x/10;
+        markerSize = max(10.0, markerSize);
         Point p2 = center + size * 0.5;
-        Point p1 = center + size * 0.5 -Point(10,10);
+        Point p1 = center + size * 0.5 -Point(markerSize, markerSize);
 
         return ((p1.x <= p.x) && (p1.y <= p.y) &&
                 (p2.x >= p.x) && (p2.y >= p.y));
@@ -191,6 +195,18 @@ public:
     }
 
     virtual void draw(QPainter & painter) const =0;
+
+    virtual void drawMarkers(QPainter & painter) const
+    {
+        Point tl = center - size * 0.5;
+        double markerSize = size.x/10;
+        markerSize = max(10.0, markerSize);
+        painter.setPen(QColor(0,0,0,255));
+        painter.setBrush(QBrush(QColor(0,0,0,255)));
+        painter.drawRect(tl.x, tl.y, markerSize, markerSize);
+        painter.drawRect(tl.x+size.x-markerSize, tl.y+size.y-markerSize,
+                         markerSize, markerSize);
+    }
 
     void swapCorners(Point *c1, Point *c2)
     {
