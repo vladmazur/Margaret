@@ -20,7 +20,8 @@ using namespace std;
 #include "Line.h"
 #include "Point.h"
 
-typedef enum{REFLECT_HORIZONTAL, REFLECT_VERTICAL} REFLECT_TYPE;
+typedef enum {REFLECT_HORIZONTAL, REFLECT_VERTICAL} REFLECT_TYPE;
+typedef enum {FTRect, FTPolygon, FTBroken} FIGURETYPE;
 
 class Figure {
 protected:
@@ -30,11 +31,21 @@ protected:
     Color       backGroundColor;
     Line        line;
     unsigned    number;
-    unsigned    type;
+    FIGURETYPE  type;
     bool        selected;
     
 public:
     static unsigned count;
+
+    FIGURETYPE getType()
+    {
+        return type;
+    }
+
+    void setType(FIGURETYPE type_)
+    {
+        type = type_;
+    }
 
     Point getLeftUpperPoint() const {
         return leftUpperPoint;
@@ -136,10 +147,6 @@ public:
 
         return ((p1.x <= p.x) && (p1.y <= p.y) &&
                 (p2.x >= p.x) && (p2.y >= p.y));
-    }
-
-    int getType() {
-        return type;
     }
     
     unsigned getWidth() const

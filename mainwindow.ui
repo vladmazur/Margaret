@@ -147,6 +147,8 @@
       </rect>
      </property>
     </widget>
+    <zorder>grid</zorder>
+    <zorder>PolygonCornersSplitter</zorder>
    </widget>
    <widget class="QComboBox" name="LineStyleChooser">
     <property name="geometry">
@@ -195,12 +197,46 @@
      <number>10</number>
     </property>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>480</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="PolygonCornersSplitterLabel">
+       <property name="text">
+        <string>Count of corners</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="PolygonCornersSplitter">
+       <property name="minimum">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <number>10</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
    <zorder>groupBox</zorder>
    <zorder>canvas</zorder>
    <zorder>colorPickerButton</zorder>
    <zorder>pushButton</zorder>
    <zorder>LineStyleChooser</zorder>
    <zorder>LineWidthChooser</zorder>
+   <zorder>PolygonCornersSplitter</zorder>
+   <zorder>PolygonCornersSplitterLabel</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

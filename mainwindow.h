@@ -33,6 +33,8 @@ private slots:
 
     void on_LineStyleChooser_currentIndexChanged(int index);
 
+    void on_PolygonCornersSplitter_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 
@@ -40,6 +42,7 @@ public slots:
     void selectLineWidth(int width);
     void selectLineStyle(LineStyle style);
     void selectColors(Color back, Color pen);
+    void setPolygonSettingsVisible(bool visible);
 };
 
 #endif // MAINWINDOW_H

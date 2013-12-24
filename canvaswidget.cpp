@@ -17,6 +17,7 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
     pressedPoint.x = event->localPos().x();
     pressedPoint.y = event->localPos().y();
     if (selected) selected->select(false); selected = NULL;
+//    emit setPolygonSettingsVisible(false);
     for (unsigned i = sc.getCount(); i > 0; --i)
     {
         if (sc.figureAtIndex(i-1)->includesPoint(pressedPoint))
@@ -40,12 +41,17 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
         }
     }
 
-    if (selected) {
+    if (selected)
+    {
         emit changingLineWidth(selected->getLine().thickness);
         emit changingLineStyle(selected->getLine().style);
         emit changingColors(selected->getColor(), selected->getLine().color);
-    }
 
+        if (selected->getType() == FTPolygon)
+            emit setPolygonSettingsVisible(true);
+        else
+            emit setPolygonSettingsVisible(false);
+    }
     update();
 }
 void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
@@ -69,7 +75,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         }
         else if (selected)
         {
-                selected->move(currentPoint - pressedPoint);
+            selected->move(currentPoint - pressedPoint);
         }
         else
         {
@@ -78,13 +84,18 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
             switch (workFigure) {
             case FSRect: {
                 selected = new Rectangle(pressedPoint, pressedPoint);
+                selected->setType(FTRect);
                 break; }
             case FSPolygon: {
-                selected = new Polygon(pressedPoint, pressedPoint/*+Point(50,50)*/, 5, Color(), Line());
+                selected = new Polygon(pressedPoint, pressedPoint, 5, Color(), Line());
+                selected->setType(FTPolygon);
+                ((Polygon *) selected)->setCountOfCorners(workPolygonCorCount);
+                emit setPolygonSettingsVisible(true);
                 break; }
             case FSBroken: {
                 std::vector<Point>pois;
                 selected = new Broken(pois);
+                selected->setType(FTBroken);
                 break; }
             default: {
                 selected = new Rectangle(pressedPoint, pressedPoint);
@@ -160,6 +171,15 @@ void CanvasWidget::changeLineWidth(int width)
     workLineWidth = width;
     if (selected) {
         selected->setLineWidth(width);
+        update();
+    }
+}
+
+void CanvasWidget::PolygonCornerCountChange(int count)
+{
+    workPolygonCorCount = count;
+    if(selected) {
+        ((Polygon *)selected)->setCountOfCorners(count);
         update();
     }
 }

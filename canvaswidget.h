@@ -23,12 +23,15 @@ signals:
     void changingLineWidth(int width);
     void changingLineStyle(LineStyle style);
     void changingColors(Color back, Color pen);
+    void setPolygonSettingsVisible(bool visible);
 public slots:
     void setColor(Color col, COLORTYPE type);
     void deleteFigure();
     void changeFigure(FIGURESELECTED figure);
     void changeLineStyle(LineStyle style);
     void changeLineWidth(int width);
+
+    void PolygonCornerCountChange(int count);
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);
@@ -42,5 +45,6 @@ protected:
     ShapeController sc;
     bool gridShow, gridAligment;
     FIGURESELECTED workFigure;
+    int workPolygonCorCount=5;
 };
 #endif // CANVASWIDGET_H

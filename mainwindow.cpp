@@ -15,9 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
                      this, SLOT(selectLineStyle(LineStyle)));
     QObject::connect(ui->canvas, SIGNAL(changingColors(Color,Color)),
                      this, SLOT(selectColors(Color,Color)));
+    QObject::connect(ui->canvas, SIGNAL(setPolygonSettingsVisible(bool)),
+                     this, SLOT(setPolygonSettingsVisible(bool)));
 
-    ui->canvas->raise();
+//    ui->canvas->raise();
 //    ui->grid->lower();
+
+    setPolygonSettingsVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -33,16 +37,19 @@ void MainWindow::on_pushButton_pressed()
 void MainWindow::on_rectangleBu_pressed()
 {
     ui->canvas->changeFigure(FSRect);
+    setPolygonSettingsVisible(false);
 }
 
 void MainWindow::on_polygonBu_pressed()
 {
     ui->canvas->changeFigure(FSPolygon);
+    setPolygonSettingsVisible(true);
 }
 
 void MainWindow::on_brokenBu_pressed()
 {
     ui->canvas->changeFigure(FSBroken);
+    setPolygonSettingsVisible(false);
 }
 
 void MainWindow::on_LineWidthChooser_valueChanged(int arg1)
@@ -68,4 +75,15 @@ void MainWindow::selectLineStyle(LineStyle style)
 void MainWindow::selectColors(Color back, Color pen)
 {
     ui->colorPickerButton->selectColors(back, pen);
+}
+
+void MainWindow::setPolygonSettingsVisible(bool visible)
+{
+    ui->PolygonCornersSplitter->setVisible(visible);
+    ui->PolygonCornersSplitterLabel->setVisible(visible);
+}
+
+void MainWindow::on_PolygonCornersSplitter_valueChanged(int arg1)
+{
+    ui->canvas->PolygonCornerCountChange(arg1);
 }
