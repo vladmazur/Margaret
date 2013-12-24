@@ -227,7 +227,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -253,6 +253,20 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="saveBu">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>620</y>
+      <width>71</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>save</string>
+    </property>
+   </widget>
+   <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>groupBox</zorder>
    <zorder>canvas</zorder>
@@ -260,8 +274,7 @@
    <zorder>pushButton</zorder>
    <zorder>LineStyleChooser</zorder>
    <zorder>LineWidthChooser</zorder>
-   <zorder>VerticalReflCheck</zorder>
-   <zorder>HorizontalReflCheck</zorder>
+   <zorder>saveBu</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

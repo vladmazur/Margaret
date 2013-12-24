@@ -39,6 +39,8 @@ private slots:
 
     void on_HorizontalReflCheck_stateChanged(int arg1);
 
+    void on_saveBu_pressed();
+
 private:
     Ui::MainWindow *ui;
 

@@ -1,6 +1,9 @@
 #include "canvaswidget.h"
 //#include "mainwindow.h"
 
+#include <QFileDialog>
+#include <QSvgGenerator>
+
 int clickCount = 0;
 
 CanvasWidget::CanvasWidget(QWidget *parent) :
@@ -116,7 +119,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         {
             selected->setBounds(selected->getLeftUpperPoint(), currentPoint);
         }
-        else if (selected)
+        else if (selected and !isInSpecialBrokenMode)
         {
             selected->move(currentPoint - pressedPoint);
         }
@@ -136,9 +139,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
                 emit setPolygonSettingsVisible(true);
                 break; }
             case FSBroken: {
-//                update();
-                return;
-                break; }
+                return; }
             default: {
                 selected = new Rectangle(pressedPoint, pressedPoint);
                 break; }
@@ -249,4 +250,31 @@ void CanvasWidget::setHorizontalReflection(bool isReflecting)
         selected->setHoriReflection(isReflecting);
         update();
     }
+}
+
+void CanvasWidget::saveSVG()
+{
+    QString newPath = QFileDialog::getSaveFileName(this, tr("Save SVG"),
+                                                   QDir::currentPath(), tr("SVG files (*.svg)"));
+
+    if (newPath.isEmpty())
+        return;
+
+    QSvgGenerator generator;
+    generator.setFileName(newPath);
+    generator.setSize(QSize(width(), height()));
+    generator.setViewBox(QRect(0, 0, width(), height()));
+    generator.setTitle(tr("SVG file"));
+    generator.setDescription(tr("Created by Margaret"));
+
+    QPainter painter; painter.begin(&generator);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    for (unsigned i = 0; i < sc.getCount(); ++i)
+    {
+        sc.figureAtIndex(i)->makeVertexes();
+        sc.figureAtIndex(i)->select(false);
+        sc.figureAtIndex(i)->draw(painter);
+    }
+    painter.end();
 }

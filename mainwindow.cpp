@@ -117,3 +117,8 @@ void MainWindow::on_HorizontalReflCheck_stateChanged(int arg1)
 {
     ui->canvas->setHorizontalReflection(bool(arg1));
 }
+
+void MainWindow::on_saveBu_pressed()
+{
+    ui->canvas->saveSVG();
+}

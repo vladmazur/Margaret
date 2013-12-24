@@ -85,6 +85,18 @@ public:
 
     virtual void drawMarkers(QPainter & painter) const
     {
+        vector<Point> shadows(vertexes);
+        if (reflectedGor) {
+            for (vector<Point>::iterator it = shadows.begin(); it != shadows.end(); ++it) {
+                it->x = 2 * center.x - it->x;
+            }
+        }
+        if (reflectedVer) {
+            for (vector<Point>::iterator it = shadows.begin(); it != shadows.end(); ++it) {
+                it->y = 2 * center.y - it->y;
+            }
+        }
+
         double markerSize = size.x/20;
         markerSize = min(10.0, markerSize);
         painter.setPen(QColor(0,0,0,255));
@@ -99,16 +111,28 @@ public:
         painter.setBrush(QBrush(QColor(0,0,0,255)));
         double r = line.thickness*2;
         for (unsigned i=0; i<getCountofVertexes(); i++) {
-            painter.drawEllipse(vertexes[i].x- r/2, vertexes[i].y- r/2, r, r);
+            painter.drawEllipse(shadows[i].x- r/2, shadows[i].y- r/2, r, r);
         }
     }
 
     void draw(QPainter & painter) const
     {
+        vector<Point> shadows(vertexes);
+        if (reflectedGor) {
+            for (vector<Point>::iterator it = shadows.begin(); it != shadows.end(); ++it) {
+                it->x = 2 * center.x - it->x;
+            }
+        }
+        if (reflectedVer) {
+            for (vector<Point>::iterator it = shadows.begin(); it != shadows.end(); ++it) {
+                it->y = 2 * center.y - it->y;
+            }
+        }
+
         QPoint *pois = new QPoint[getCountofVertexes()];
-        std::vector<Point> vertxs = getVertexes();
+//        std::vector<Point> vertxs = getVertexes();
         for (int i=0; i<getCountofVertexes(); i++) {
-            pois[i] = QPoint(vertxs[i].x, vertxs[i].y);
+            pois[i] = QPoint(shadows[i].x, shadows[i].y);
         }
         Color f = getColor();
         Color p = getLine().color;
@@ -156,8 +180,27 @@ public:
         }
         rightBottomPoint = Point(maxX, maxY);
 
-//        makeVertexes();
+//        if (reflectedGor) {
+//            for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+//                it->x = 2 * center.x - it->x;
+//            }
+//        }
+//        if (reflectedVer) {
+//            for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+//                it->y = 2 * center.y - it->y;
+//            }
+//        }
+    }
 
+    void setBounds(Point p1, Point p2)
+    {
+        center = (p1 + p2) * 0.5;
+        size = (p1 - p2).makePositive();
+
+        leftUpperPoint = p1;
+        rightBottomPoint = p2;
+
+        makeVertexes();
     }
     
 };

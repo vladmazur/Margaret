@@ -34,6 +34,8 @@ public slots:
     void PolygonCornerCountChange(int count);
     void setVerticalReflection(bool isReflecting);
     void setHorizontalReflection(bool isReflecting);
+
+    void saveSVG();
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);

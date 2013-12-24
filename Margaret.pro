@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += svg
 #QMAKE_CXXFLAGS = -stdlib=libc++
 #QMAKE_CXXFLAGS += -stdlib=libc++
 CONFIG   += c++11

@@ -201,7 +201,7 @@ public:
     virtual void makeVertexes()
     {}
 
-    void setBounds(Point p1, Point p2)
+    virtual void setBounds(Point p1, Point p2)
     {
         center = (p1 + p2) * 0.5;
         size = (p1 - p2).makePositive();

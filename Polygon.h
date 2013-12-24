@@ -70,7 +70,7 @@ public:
 
         QPoint *pois = new QPoint[getCountOfCorners()];
         std::vector<Point> vertxs = getVertexes();
-        for (int i=0; i<getCountOfCorners(); i++) {
+        for (unsigned i=0; i<getCountOfCorners(); i++) {
             pois[i] = QPoint(vertxs[i].x, vertxs[i].y);
         }
         painter.drawConvexPolygon(pois, getCountOfCorners());
