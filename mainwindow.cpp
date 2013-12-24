@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->canvas, SIGNAL(changingLineWidth(int)),
                      this, SLOT(selectLineWidth(int)));
+    QObject::connect(ui->canvas, SIGNAL(changingLineStyle(LineStyle)),
+                     this, SLOT(selectLineStyle(LineStyle)));
+    QObject::connect(ui->canvas, SIGNAL(changingColors(Color,Color)),
+                     this, SLOT(selectColors(Color,Color)));
 
     ui->canvas->raise();
 //    ui->grid->lower();
@@ -54,4 +58,14 @@ void MainWindow::on_LineStyleChooser_currentIndexChanged(int index)
 void MainWindow::selectLineWidth(int width)
 {
     ui->LineWidthChooser->setValue(width);
+}
+
+void MainWindow::selectLineStyle(LineStyle style)
+{
+    ui->LineStyleChooser->setCurrentIndex((int)style);
+}
+
+void MainWindow::selectColors(Color back, Color pen)
+{
+    ui->colorPickerButton->selectColors(back, pen);
 }

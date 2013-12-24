@@ -26,8 +26,6 @@ void Square::swapCorners(Point *c1, Point *c2)
         c2->y = c1->y; c1->y = temp;
         wasChanged = true;
     }
-	if (wasChanged)
-		std::cout << "Square: given coordinates were bad, so I've fixed them\n";
 }
 
 Square::Square()

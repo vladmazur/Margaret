@@ -13,7 +13,7 @@
 #include "Color.h"
 
 typedef enum {
-    LineStyleSolid,
+    LineStyleSolid=0,
     LineStyleDotted,
     LineStyleDashed,
 } LineStyle;

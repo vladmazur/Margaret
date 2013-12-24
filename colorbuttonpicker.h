@@ -13,7 +13,7 @@ public:
 signals:
     void colorChanged(Color col, COLORTYPE ctype);
 public slots:
-
+    void selectColors(Color back, Color pen);
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void paintEvent (QPaintEvent * event);

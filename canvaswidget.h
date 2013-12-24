@@ -21,6 +21,8 @@ public:
     Figure* selected;
 signals:
     void changingLineWidth(int width);
+    void changingLineStyle(LineStyle style);
+    void changingColors(Color back, Color pen);
 public slots:
     void setColor(Color col, COLORTYPE type);
     void deleteFigure();

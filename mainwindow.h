@@ -5,7 +5,8 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
-//#include "QRectangle.h"
+
+#include "Figure.h"
 
 namespace Ui {
 class MainWindow;
@@ -37,6 +38,8 @@ private:
 
 public slots:
     void selectLineWidth(int width);
+    void selectLineStyle(LineStyle style);
+    void selectColors(Color back, Color pen);
 };
 
 #endif // MAINWINDOW_H

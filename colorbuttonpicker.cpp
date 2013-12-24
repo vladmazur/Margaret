@@ -66,3 +66,10 @@ void ColorButtonPicker::setColor(Color col, COLORTYPE type)
 
     emit colorChanged(col, type);
 }
+
+void ColorButtonPicker::selectColors(Color back, Color pen)
+{
+    color = back;
+    penColor = pen;
+    update();
+}

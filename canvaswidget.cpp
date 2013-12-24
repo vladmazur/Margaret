@@ -40,8 +40,11 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
         }
     }
 
-    if (selected)
+    if (selected) {
         emit changingLineWidth(selected->getLine().thickness);
+        emit changingLineStyle(selected->getLine().style);
+        emit changingColors(selected->getColor(), selected->getLine().color);
+    }
 
     update();
 }
@@ -160,8 +163,3 @@ void CanvasWidget::changeLineWidth(int width)
         update();
     }
 }
-
-//void CanvasWidget::changingLineWidth(int width)
-//{
-////
-//}
