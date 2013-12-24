@@ -36,12 +36,20 @@ void Polygon::makeVertexes()
     int n=0;
     Square sq(leftUpperPoint, rightBottomPoint);
     Radius = sq.getSideSize() / 2;
-    for (float alp=90+alpha/2; n++ < cornersCount; alp= alp+alpha)
-    {
+    for (float alp=90+alpha/2; n++ < cornersCount; alp= alp+alpha) {
         float x = Radius * cos(rad(alp));
         float y = Radius * sin(rad(alp));
-        
         vertexes.push_back(Point(center.x+x, center.y+y));
+    }
+    if (reflectedGor) {
+        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+            it->x = 2 * center.x - it->x;
+        }
+    }
+    if (reflectedVer) {
+        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
+            it->y = 2 * center.y - it->y;
+        }
     }
 }
 
@@ -63,50 +71,12 @@ vector<Point> Polygon::getVertexes() const
     return vertexes;
 }
 
-void Polygon::move(float dx, float dy)
-{
-    for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
-        it->x += dx;
-        it->y += dy;
-    }
-    leftUpperPoint.x += dx;
-    leftUpperPoint.y += dy;
-    rightBottomPoint.x += dx;
-    rightBottomPoint.y += dy;
-    center.x += dx;
-    center.y += dy;
-}
-
 void Polygon::move(Point p)
 {
     center = p;
     leftUpperPoint = p - size*0.5;
     rightBottomPoint  = p + size*0.5;
     makeVertexes();
-}
-
-void Polygon::scale(float scale)
-{
-    Square sq(leftUpperPoint, rightBottomPoint);
-    sq.scale(scale);
-    center = sq.getCenter();
-    Radius = sq.getSideSize() / 2;
-    sideSize = 2*Radius*sin(rad(alpha/2));
-    makeVertexes();
-}
-
-void Polygon::reflect(REFLECT_TYPE type)
-{
-    if (type == REFLECT_HORIZONTAL) {
-        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
-            it->x = 2 * center.x - it->x;
-        }
-    }
-    if (type == REFLECT_VERTICAL) {
-        for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
-            it->y = 2 * center.y - it->y;
-        }
-    }
 }
 
 std::ostream &operator << (std::ostream &os, const Polygon &p)

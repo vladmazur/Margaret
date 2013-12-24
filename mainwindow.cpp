@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
                      this, SLOT(selectColors(Color,Color)));
     QObject::connect(ui->canvas, SIGNAL(setPolygonSettingsVisible(bool)),
                      this, SLOT(setPolygonSettingsVisible(bool)));
+    QObject::connect(ui->canvas, SIGNAL(setReflectionSettings(bool, bool)),
+                     this, SLOT(setReflectionSettings(bool,bool)));
 
 //    ui->canvas->raise();
 //    ui->grid->lower();
@@ -82,8 +84,6 @@ void MainWindow::selectLineStyle(LineStyle style)
     default:
         break;
     }
-
-//    ui->LineStyleChooser->setCurrentIndex((int)style);
 }
 
 void MainWindow::selectColors(Color back, Color pen)
@@ -97,7 +97,23 @@ void MainWindow::setPolygonSettingsVisible(bool visible)
     ui->PolygonCornersSplitterLabel->setVisible(visible);
 }
 
+void MainWindow::setReflectionSettings(bool reflectedVer, bool reflectedGor)
+{
+    ui->VerticalReflCheck->setChecked(reflectedVer);
+    ui->HorizontalReflCheck->setChecked(reflectedGor);
+}
+
 void MainWindow::on_PolygonCornersSplitter_valueChanged(int arg1)
 {
     ui->canvas->PolygonCornerCountChange(arg1);
+}
+
+void MainWindow::on_VerticalReflCheck_stateChanged(int arg1)
+{
+    ui->canvas->setVerticalReflection(bool(arg1));
+}
+
+void MainWindow::on_HorizontalReflCheck_stateChanged(int arg1)
+{
+    ui->canvas->setHorizontalReflection(bool(arg1));
 }

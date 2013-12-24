@@ -147,8 +147,6 @@
       </rect>
      </property>
     </widget>
-    <zorder>grid</zorder>
-    <zorder>PolygonCornersSplitter</zorder>
    </widget>
    <widget class="QComboBox" name="LineStyleChooser">
     <property name="geometry">
@@ -197,7 +195,7 @@
      <number>10</number>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -229,14 +227,41 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>560</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QCheckBox" name="VerticalReflCheck">
+       <property name="text">
+        <string>Vertical</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="HorizontalReflCheck">
+       <property name="text">
+        <string>Horizontal</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>layoutWidget</zorder>
    <zorder>groupBox</zorder>
    <zorder>canvas</zorder>
    <zorder>colorPickerButton</zorder>
    <zorder>pushButton</zorder>
    <zorder>LineStyleChooser</zorder>
    <zorder>LineWidthChooser</zorder>
-   <zorder>PolygonCornersSplitter</zorder>
-   <zorder>PolygonCornersSplitterLabel</zorder>
+   <zorder>VerticalReflCheck</zorder>
+   <zorder>HorizontalReflCheck</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

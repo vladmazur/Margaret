@@ -35,6 +35,10 @@ private slots:
 
     void on_PolygonCornersSplitter_valueChanged(int arg1);
 
+    void on_VerticalReflCheck_stateChanged(int arg1);
+
+    void on_HorizontalReflCheck_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 
@@ -43,6 +47,7 @@ public slots:
     void selectLineStyle(LineStyle style);
     void selectColors(Color back, Color pen);
     void setPolygonSettingsVisible(bool visible);
+    void setReflectionSettings(bool reflectedVer, bool reflectedGor);
 };
 
 #endif // MAINWINDOW_H

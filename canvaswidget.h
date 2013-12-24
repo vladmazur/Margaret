@@ -24,14 +24,16 @@ signals:
     void changingLineStyle(LineStyle style);
     void changingColors(Color back, Color pen);
     void setPolygonSettingsVisible(bool visible);
+    void setReflectionSettings(bool vert, bool horiz);
 public slots:
     void setColor(Color col, COLORTYPE type);
     void deleteFigure();
     void changeFigure(FIGURESELECTED figure);
     void changeLineStyle(LineStyle style);
     void changeLineWidth(int width);
-
     void PolygonCornerCountChange(int count);
+    void setVerticalReflection(bool isReflecting);
+    void setHorizontalReflection(bool isReflecting);
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);

@@ -10,7 +10,7 @@ CanvasWidget::CanvasWidget(QWidget *parent) :
 }
 CanvasWidget::~CanvasWidget()
 {
-        sc.deleteAll();
+    sc.deleteAll();
 }
 void CanvasWidget::mousePressEvent (QMouseEvent * event)
 {
@@ -46,6 +46,7 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
         emit changingLineWidth(selected->getLine().thickness);
         emit changingLineStyle(selected->getLine().style);
         emit changingColors(selected->getColor(), selected->getLine().color);
+        emit setReflectionSettings(selected->getReflectedVer(), selected->getReflectedGor());
 
         if (selected->getType() == FTPolygon)
             emit setPolygonSettingsVisible(true);
@@ -101,6 +102,7 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
                 selected = new Rectangle(pressedPoint, pressedPoint);
                 break; }
             }
+            emit setReflectionSettings(false, false);
             selected->setColor(workColor);
             selected->setLineStyle(workLineStyle);
             selected->setLineColor(workPenColor);
@@ -125,6 +127,7 @@ void CanvasWidget::paintEvent (QPaintEvent *)
     QPainter painter(this);
     for (unsigned i = 0; i < sc.getCount(); ++i)
     {
+        sc.figureAtIndex(i)->makeVertexes();
         sc.figureAtIndex(i)->draw(painter);
     }    
 }
@@ -180,6 +183,22 @@ void CanvasWidget::PolygonCornerCountChange(int count)
     workPolygonCorCount = count;
     if(selected) {
         ((Polygon *)selected)->setCountOfCorners(count);
+        update();
+    }
+}
+
+void CanvasWidget::setVerticalReflection(bool isReflecting)
+{
+    if (selected) {
+        selected->setVertReflection(isReflecting);
+        update();
+    }
+}
+
+void CanvasWidget::setHorizontalReflection(bool isReflecting)
+{
+    if (selected) {
+        selected->setHoriReflection(isReflecting);
         update();
     }
 }

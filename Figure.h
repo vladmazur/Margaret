@@ -33,6 +33,8 @@ protected:
     unsigned    number;
     FIGURETYPE  type;
     bool        selected;
+    bool        reflectedVer=false,
+                reflectedGor=false;
     
 public:
     static unsigned count;
@@ -46,6 +48,15 @@ public:
     {
         type = type_;
     }
+
+    bool getReflectedVer() {
+        return reflectedVer;
+    }
+
+    bool getReflectedGor() {
+        return reflectedGor;
+    }
+
 
     Point getLeftUpperPoint() const {
         return leftUpperPoint;
@@ -102,9 +113,17 @@ public:
         return backGroundColor;
     }
     
-    virtual void reflect(REFLECT_TYPE type) {}
-    virtual void move(float dx, float dy) {}
-    virtual void scale(float scale_) {}
+    virtual void reflect(REFLECT_TYPE type) = 0;
+    void setVertReflection(bool isRefl)
+    {
+        reflectedVer = isRefl;
+    }
+    void setHoriReflection(bool isRefl)
+    {
+        reflectedGor = isRefl;
+    }
+//    virtual void move(float dx, float dy) {}
+//    virtual void scale(float scale_) {}
     virtual vector<Point> getVertexes() const = 0;
     /*
      virtual void funcFoo() const = 0;     

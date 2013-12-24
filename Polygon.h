@@ -17,23 +17,27 @@
 using namespace std;
 
 class Polygon: public Figure {
-private:
+protected:
     unsigned    cornersCount;
     float       alpha;
     float       sideSize;
     float       Radius;
     
     vector<Point> vertexes;
-    void makeVertexes();
 public:
+    void makeVertexes();
     vector<Point> getVertexes() const;
     
     unsigned getCountOfCorners() const;
     void setCountOfCorners(unsigned newCornersCount);
     
-    void scale(float scale);
-    void move(float dx, float dy);
-    void reflect(REFLECT_TYPE type);
+    void reflect(REFLECT_TYPE type)
+    {
+        if (type == REFLECT_VERTICAL)
+            reflectedVer = ! reflectedVer;
+        else
+            reflectedGor = ! reflectedGor;
+    }
     
     void print()
     {
@@ -47,7 +51,6 @@ public:
 
     void draw(QPainter & painter) const
     {
-        Point tl = center - size * 0.5;
         Color f = getColor();
         Color p = getLine().color;
         if (isSelected()) f *= 0.5;
@@ -70,7 +73,6 @@ public:
         for (int i=0; i<getCountOfCorners(); i++) {
             pois[i] = QPoint(vertxs[i].x, vertxs[i].y);
         }
-
         painter.drawConvexPolygon(pois, getCountOfCorners());
 
         if (isSelected())
