@@ -69,7 +69,21 @@ void MainWindow::selectLineWidth(int width)
 
 void MainWindow::selectLineStyle(LineStyle style)
 {
-    ui->LineStyleChooser->setCurrentIndex((int)style);
+    switch (style) {
+    case LineStyleSolid:
+        ui->LineStyleChooser->setCurrentIndex(0);
+        break;
+    case LineStyleDotted:
+        ui->LineStyleChooser->setCurrentIndex(1);
+        break;
+    case LineStyleDashed:
+        ui->LineStyleChooser->setCurrentIndex(2);
+        break;
+    default:
+        break;
+    }
+
+//    ui->LineStyleChooser->setCurrentIndex((int)style);
 }
 
 void MainWindow::selectColors(Color back, Color pen)
