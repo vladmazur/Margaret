@@ -1,4 +1,5 @@
 #include "canvaswidget.h"
+//#include "mainwindow.h"
 
 CanvasWidget::CanvasWidget(QWidget *parent) :
     QWidget(parent), selected(NULL), creating(false), resizingLU(false),
@@ -35,9 +36,13 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
                 pressedPoint.x = event->localPos().x();
                 pressedPoint.y = event->localPos().y();
             }
-
             break;
-        } }
+        }
+    }
+
+    if (selected)
+        emit changingLineWidth(selected->getLine().thickness);
+
     update();
 }
 void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
@@ -155,3 +160,8 @@ void CanvasWidget::changeLineWidth(int width)
         update();
     }
 }
+
+//void CanvasWidget::changingLineWidth(int width)
+//{
+////
+//}

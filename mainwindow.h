@@ -34,6 +34,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void selectLineWidth(int width);
 };
 
 #endif // MAINWINDOW_H

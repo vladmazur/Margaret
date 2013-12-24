@@ -20,6 +20,7 @@ public:
     std::vector< Figure * > shapes;
     Figure* selected;
 signals:
+    void changingLineWidth(int width);
 public slots:
     void setColor(Color col, COLORTYPE type);
     void deleteFigure();
