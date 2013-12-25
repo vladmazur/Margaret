@@ -223,7 +223,8 @@ public:
 
 //        rectangles:
         QDomNodeList items = root.elementsByTagName("Rectangle");
-        for (int i=0; i< items.count(); i++) {
+        for (int i=0; i< items.count(); i++)
+        {
             QDomNode item = items.at(i);
             if ( ! item.isElement())
                 continue;
@@ -247,13 +248,43 @@ public:
                        col.attribute("blue").toInt(), col.attribute("alpha").toInt());
             rect->setLine(width, lineCol, LineStyle(style));
 
+            rect->setType(FTRect);
             rect->select(false);
-
-//            rect->print();
             addFigure(rect);
         }
 
-        qDebug() << items.count();
+        items = root.elementsByTagName("Polygon");
+        for (int i=0; i< items.count(); i++)
+        {
+            QDomNode item = items.at(i);
+            if ( ! item.isElement())
+                continue;
+            QDomElement elem = item.toElement();
+            QDomElement LUpoint = elem.firstChildElement();
+            QDomElement RDpoint = elem.elementsByTagName("RightBottomPoint").at(0).toElement();
+
+            QDomElement col = elem.elementsByTagName("BackGroundColor").at(0).toElement();
+            Color back(col.attribute("red").toInt(), col.attribute("green").toInt(),
+                       col.attribute("blue").toInt(), col.attribute("alpha").toInt());
+
+            QDomElement line = elem.elementsByTagName("Line").at(0).toElement();
+            int width, style;
+            width = line.attribute("Width").toInt();
+            style = line.attribute("Style").toInt();
+            col = line.elementsByTagName("Color").at(0).toElement();
+            Color lineCol(col.attribute("red").toInt(), col.attribute("green").toInt(),
+                       col.attribute("blue").toInt(), col.attribute("alpha").toInt());
+
+            QDomElement corCount = elem.elementsByTagName("CornerCount").at(0).toElement();
+
+            Figure * poly = new Polygon(Point(LUpoint.attribute("x").toDouble(), LUpoint.attribute("y").toDouble()),
+                                          Point(RDpoint.attribute("x").toDouble(), RDpoint.attribute("y").toDouble()),
+                                        corCount.attribute("count").toInt(), back, Line(width, lineCol, LineStyle(style)));
+
+            poly->setType(FTPolygon);
+            poly->select(false);
+            addFigure(poly);
+        }
 
     }
 };

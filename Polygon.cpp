@@ -33,6 +33,7 @@ void Polygon::setCountOfCorners(unsigned newCornersCount)
 void Polygon::makeVertexes()
 {
     vertexes.clear();
+    size = (leftUpperPoint - rightBottomPoint).makePositive();
     int n=0;
     Square sq(leftUpperPoint, rightBottomPoint);
     Radius = sq.getSideSize() / 2;

@@ -197,6 +197,7 @@ void CanvasWidget::deleteFigure()
 {
     if (selected) {
         sc.deleteByNumber(selected->getNumber());
+        selected = NULL;
         update();
     }
 }
