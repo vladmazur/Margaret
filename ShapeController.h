@@ -20,6 +20,7 @@
 
 #include "Polygon.h"
 #include "Broken.h"
+#include "Rectangle.h"
 
 using namespace std;
 
@@ -106,7 +107,13 @@ public:
 
     void saveToXML()
     {
+        loadFromXML();
+
         QDomDocument doc;
+
+        QDomElement mainRoot = doc.createElement("Figures");
+        doc.appendChild(mainRoot);
+
         for (unsigned i=0; i< getCount(); i++)
         {
             Figure * fig = figureAtIndex(i);
@@ -157,7 +164,7 @@ public:
             temp.appendChild(lineSets);
             root.appendChild(temp);
 
-            doc.appendChild(root);
+            mainRoot.appendChild(root);
 
             if (fig->getType() == FTPolygon)
             {
@@ -184,17 +191,69 @@ public:
             }
 
         }
+
         QFile file("/Users/vladmazur/Desktop/123.xml");
         if (file.open(QIODevice::WriteOnly | QIODevice ::Text))
         {
             QTextStream str(&file);
-            str << doc.toString();
+            QDomNode node( doc.createProcessingInstruction( "xml", "version=\"1.0\" standalone=\"no\"" ) );
+            doc.insertBefore( node, doc.firstChild() );
+            doc.save(str, 4);
             file.close();
         }
+
+
     }
 
     void loadFromXML()
     {
+        QFile file("/Users/vladmazur/Desktop/123.xml");
+        if ( ! file.open(QIODevice::ReadOnly | QIODevice ::Text))
+            return;
+        QString error;
+        int line, col;
+        QDomDocument doc;
+        if ( ! doc.setContent(&file, &error, &line, &col)) {
+            qDebug() << error <<"  "<<line<<"  "<<col;
+            return;
+        }
+        file.close();
+
+        QDomElement root = doc.firstChildElement();
+
+//        rectangles:
+        QDomNodeList items = root.elementsByTagName("Rectangle");
+        for (int i=0; i< items.count(); i++) {
+            QDomNode item = items.at(i);
+            if ( ! item.isElement())
+                continue;
+            QDomElement elem = item.toElement();
+            QDomElement LUpoint = elem.firstChildElement();
+            QDomElement RDpoint = elem.elementsByTagName("RightBottomPoint").at(0).toElement();
+
+            Figure * rect = new Rectangle(Point(LUpoint.attribute("x").toDouble(), LUpoint.attribute("y").toDouble()),
+                                          Point(RDpoint.attribute("x").toDouble(), RDpoint.attribute("y").toDouble()));
+            QDomElement col = elem.elementsByTagName("BackGroundColor").at(0).toElement();
+            Color back(col.attribute("red").toInt(), col.attribute("green").toInt(),
+                       col.attribute("blue").toInt(), col.attribute("alpha").toInt());
+            rect->setColor(back);
+
+            QDomElement line = elem.elementsByTagName("Line").at(0).toElement();
+            int width, style;
+            width = line.attribute("Width").toInt();
+            style = line.attribute("Style").toInt();
+            col = line.elementsByTagName("Color").at(0).toElement();
+            Color lineCol(col.attribute("red").toInt(), col.attribute("green").toInt(),
+                       col.attribute("blue").toInt(), col.attribute("alpha").toInt());
+            rect->setLine(width, lineCol, LineStyle(style));
+
+            rect->select(false);
+
+//            rect->print();
+            addFigure(rect);
+        }
+
+        qDebug() << items.count();
 
     }
 };

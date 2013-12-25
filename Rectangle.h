@@ -107,6 +107,12 @@ public:
             drawMarkers(painter);
     }
 
+    void makeVertexes()
+    {
+        center = (leftUpperPoint + rightBottomPoint) * 0.5;
+        size = (leftUpperPoint - rightBottomPoint).makePositive();
+    }
+
 //    void loadFromDom(QDomDocument doc)
 //    {
 //        QDomElement root = doc.firstChildElement();
