@@ -78,6 +78,12 @@ public:
         if (isSelected())
             drawMarkers(painter);
     }
+
+    QDomElement getDomElement(QDomDocument doc) const
+    {
+        return QDomElement();
+    }
+
     
     friend std::ostream &operator << (std::ostream &os, const Polygon &p);
 };

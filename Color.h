@@ -10,6 +10,7 @@
 #define __Lab1__Color__
 
 #include <iostream>
+#include <QDataStream>
 
 typedef enum {CTBACKGROUND, CTPEN} COLORTYPE;
 
@@ -48,5 +49,20 @@ inline bool operator !=(const Color& left, const Color& right)
             (left.blue == right.blue) &&
             (left.alpha == right.alpha)));
 }
+
+QDataStream &operator<<(QDataStream &out, const Color &col);
+//{
+//    out << col.red << col.green << col.blue << col.alpha;
+//    return out;
+//}
+
+QDataStream &operator>>(QDataStream &in, Color &col);
+//{
+//    unsigned char red, green, blue, alpha;
+
+//    in >> red >> green >> blue >> alpha;
+//    col = Color(red, green, blue, alpha);
+//    return in;
+//}
 
 #endif /* defined(__Lab1__Color__) */

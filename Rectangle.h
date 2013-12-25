@@ -107,6 +107,58 @@ public:
             drawMarkers(painter);
     }
 
+//    void loadFromDom(QDomDocument doc)
+//    {
+//        QDomElement root = doc.firstChildElement();
+
+//    }
+
+//    QDomElement getDomElement(QDomDocument doc) const
+//    {
+//        QDomElement root =  doc.createElement("Rectangle");
+
+//        QDomElement temp = doc.createElement("LeftUpperPoint");
+//        temp.setAttribute("x", leftUpperPoint.x);
+//        temp.setAttribute("y", leftUpperPoint.y);
+//        root.appendChild(temp);
+
+//        temp = doc.createElement("RightBottomPoint");
+//        temp.setAttribute("x", rightBottomPoint.x);
+//        temp.setAttribute("y", rightBottomPoint.y);
+//        root.appendChild(temp);
+
+//        temp = doc.createElement("BackGroundColor");
+//        temp.setAttribute("red", backGroundColor.red);
+//        temp.setAttribute("green", backGroundColor.green);
+//        temp.setAttribute("blue", backGroundColor.blue);
+//        temp.setAttribute("alpha", backGroundColor.alpha);
+//        root.appendChild(temp);
+
+//        temp = doc.createElement("Line");
+//        temp.setAttribute("Width", QString::number(line.thickness));
+//        temp.setAttribute("Style", QString::number((int)line.style));
+//        QDomElement lineSets = doc.createElement("Color");
+//        lineSets.setAttribute("red", line.color.red);
+//        lineSets.setAttribute("green", line.color.green);
+//        lineSets.setAttribute("blue", line.color.blue);
+//        lineSets.setAttribute("alpha", line.color.alpha);
+//        temp.appendChild(lineSets);
+//        root.appendChild(temp);
+
+//        doc.appendChild(root);
+//        qDebug() << doc.toString();
+
+////        QFile file("/Users/vladmazur/Desktop/123.xml");
+////        if (file.open(QIODevice::WriteOnly | QIODevice ::Text))
+////        {
+////            QTextStream str(&file);
+////            str << doc.toString();
+////            file.close();
+////        }
+
+//        return root;
+//    }
+
 };
 
 #endif /* defined(__Lab2__Rectangle__) */

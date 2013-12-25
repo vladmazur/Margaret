@@ -179,17 +179,6 @@ public:
             if(it->y > maxY) maxY = it->y;
         }
         rightBottomPoint = Point(maxX, maxY);
-
-//        if (reflectedGor) {
-//            for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
-//                it->x = 2 * center.x - it->x;
-//            }
-//        }
-//        if (reflectedVer) {
-//            for (vector<Point>::iterator it = vertexes.begin(); it != vertexes.end(); ++it) {
-//                it->y = 2 * center.y - it->y;
-//            }
-//        }
     }
 
     void setBounds(Point p1, Point p2)
@@ -201,6 +190,11 @@ public:
         rightBottomPoint = p2;
 
         makeVertexes();
+    }
+
+    QDomElement getDomElement(QDomDocument doc) const
+    {
+        return QDomElement();
     }
     
 };

@@ -12,6 +12,9 @@ CanvasWidget::CanvasWidget(QWidget *parent) :
 {
     workColor = Color(255,212,22,255);
     workPenColor = Color(195,25,172,255);
+    workLineStyle = LineStyleSolid;
+    workFigure = FSRect;
+    workPolygonCorCount = 5;
 }
 CanvasWidget::~CanvasWidget()
 {

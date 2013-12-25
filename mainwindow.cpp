@@ -20,9 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->canvas, SIGNAL(setReflectionSettings(bool, bool)),
                      this, SLOT(setReflectionSettings(bool,bool)));
 
-//    ui->canvas->raise();
-//    ui->grid->lower();
-
     setPolygonSettingsVisible(false);
 }
 

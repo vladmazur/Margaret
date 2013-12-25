@@ -20,6 +20,9 @@ using namespace std;
 #include "Line.h"
 #include "Point.h"
 
+#include <QtCore>
+#include <QtXml>
+
 typedef enum {REFLECT_HORIZONTAL, REFLECT_VERTICAL} REFLECT_TYPE;
 typedef enum {FTRect, FTPolygon, FTBroken} FIGURETYPE;
 
@@ -125,13 +128,10 @@ public:
 //    virtual void move(float dx, float dy) {}
 //    virtual void scale(float scale_) {}
     virtual vector<Point> getVertexes() const = 0;
-    /*
-     virtual void funcFoo() const = 0;     
-     virtual void funcFoo() = 0;
-     
-     The difference is that the first function can be called on const objects, while the second can't. Moreover, the first function can only call other const member functions on the same object. Regarding inheritance, they behave the same way.
-     */
     virtual void print() {}
+
+    virtual QDomElement getDomElement(QDomDocument doc) const
+    {}
 
     unsigned getNumber() const
     {

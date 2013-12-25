@@ -14,3 +14,18 @@ std::ostream& operator<<(std::ostream &os, const Color &c)
          (int) c.alpha << ")\n";
     return os;
 }
+
+QDataStream &operator<<(QDataStream &out, const Color &col)
+{
+    out << col.red << col.green << col.blue << col.alpha;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, Color &col)
+{
+    unsigned char red, green, blue, alpha;
+
+    in >> red >> green >> blue >> alpha;
+    col = Color(red, green, blue, alpha);
+    return in;
+}
