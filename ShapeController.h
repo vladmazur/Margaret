@@ -286,6 +286,49 @@ public:
             addFigure(poly);
         }
 
+        items = root.elementsByTagName("Broken");
+        for (int i=0; i< items.count(); i++)
+        {
+            QDomNode item = items.at(i);
+            if ( ! item.isElement())
+                continue;
+            QDomElement elem = item.toElement();
+            QDomElement LUpoint = elem.firstChildElement();
+            QDomElement RDpoint = elem.elementsByTagName("RightBottomPoint").at(0).toElement();
+
+            QDomElement col = elem.elementsByTagName("BackGroundColor").at(0).toElement();
+            Color back(col.attribute("red").toInt(), col.attribute("green").toInt(),
+                       col.attribute("blue").toInt(), col.attribute("alpha").toInt());
+
+            QDomElement line = elem.elementsByTagName("Line").at(0).toElement();
+            int width, style;
+            width = line.attribute("Width").toInt();
+            style = line.attribute("Style").toInt();
+            col = line.elementsByTagName("Color").at(0).toElement();
+            Color lineCol(col.attribute("red").toInt(), col.attribute("green").toInt(),
+                       col.attribute("blue").toInt(), col.attribute("alpha").toInt());
+
+            vector<Point> pois;
+            QDomNodeList vertexes = elem.elementsByTagName("Vertex");
+            for (int i=0; i< vertexes.count(); i++)
+            {
+                QDomElement ver =  vertexes.at(i).toElement();
+                double x,y;
+                x = ver.attribute("x").toDouble();
+                y = ver.attribute("y").toDouble();
+                Point p(x, y);
+                pois.push_back(p);
+            }
+
+            Figure * brok = new Broken(pois);
+            brok->setColor(back);
+            brok->setLine(Line(width, lineCol, LineStyle(style)));
+
+            brok->setType(FTBroken);
+            brok->select(false);
+            addFigure(brok);
+        }
+
     }
 };
 
