@@ -38,6 +38,8 @@ public:
     
     Figure * figureAtIndex(unsigned index)
     {
+        if (index > figures.size()-1)
+            return NULL;
         return figures[index];
     }
     
@@ -65,13 +67,11 @@ public:
         auto fig2 = std::find(figures.begin(), figures.end(), fig);
         figures.erase(fig2);
         delete fig;
-
-        saveToXML();
     }
     
     void deleteAtIndex(unsigned index)
     {
-        if (index > figures.size())
+        if (index > figures.size()-1)
             return;
         delete figures[index];
         figures.erase(figures.begin() + index);
@@ -105,10 +105,8 @@ public:
         return figures;
     }
 
-    void saveToXML()
+    void saveToXML(QString fileName)
     {
-        loadFromXML();
-
         QDomDocument doc;
 
         QDomElement mainRoot = doc.createElement("Figures");
@@ -189,10 +187,9 @@ public:
                     root.appendChild(temp);
                 }
             }
-
         }
 
-        QFile file("/Users/vladmazur/Desktop/123.xml");
+        QFile file(fileName);
         if (file.open(QIODevice::WriteOnly | QIODevice ::Text))
         {
             QTextStream str(&file);
@@ -201,15 +198,17 @@ public:
             doc.save(str, 4);
             file.close();
         }
-
-
     }
 
-    void loadFromXML()
+    void loadFromXML(QString fileName)
     {
-        QFile file("/Users/vladmazur/Desktop/123.xml");
-        if ( ! file.open(QIODevice::ReadOnly | QIODevice ::Text))
+        deleteAll();
+
+        QFile file(fileName);
+        if ( ! file.open(QIODevice::ReadOnly | QIODevice ::Text)) {
+            qDebug() << "no file!";
             return;
+        }
         QString error;
         int line, col;
         QDomDocument doc;
@@ -253,6 +252,7 @@ public:
             addFigure(rect);
         }
 
+//        polygons:
         items = root.elementsByTagName("Polygon");
         for (int i=0; i< items.count(); i++)
         {
@@ -286,6 +286,7 @@ public:
             addFigure(poly);
         }
 
+//        brokens:
         items = root.elementsByTagName("Broken");
         for (int i=0; i< items.count(); i++)
         {
@@ -328,7 +329,6 @@ public:
             brok->select(false);
             addFigure(brok);
         }
-
     }
 };
 

@@ -169,12 +169,17 @@ void CanvasWidget::mouseReleaseEvent (QMouseEvent *)
 }
 void CanvasWidget::paintEvent (QPaintEvent *)
 {
+    if(freeze)
+        return;
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     for (unsigned i = 0; i < sc.getCount(); ++i)
     {
-        sc.figureAtIndex(i)->makeVertexes();
-        sc.figureAtIndex(i)->draw(painter);
+        Figure * fig = sc.figureAtIndex(i);
+        if (fig) {
+            sc.figureAtIndex(i)->makeVertexes();
+            sc.figureAtIndex(i)->draw(painter);
+        }
     }    
 }
 
@@ -258,8 +263,8 @@ void CanvasWidget::setHorizontalReflection(bool isReflecting)
 
 void CanvasWidget::saveSVG()
 {
-    QString newPath = QFileDialog::getSaveFileName(this, tr("Save SVG"),
-                                                   QDir::currentPath(), tr("SVG files (*.svg)"));
+    QString newPath = QFileDialog::getSaveFileName(this, tr("Save MGT"),
+                                                   QDir::currentPath(), tr("MGT files (*.mgt)"));
 
     if (newPath.isEmpty())
         return;
@@ -281,4 +286,14 @@ void CanvasWidget::saveSVG()
         sc.figureAtIndex(i)->draw(painter);
     }
     painter.end();
+}
+
+ShapeController * CanvasWidget::getShapeController()
+{
+    return &sc;
+}
+
+void CanvasWidget::setFreeze(bool f)
+{
+    freeze = f;
 }

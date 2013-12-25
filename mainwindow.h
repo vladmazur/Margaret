@@ -41,8 +41,23 @@ private slots:
 
     void on_saveBu_pressed();
 
+    void open();
+    bool save();
+    bool saveAs();
+
 private:
     Ui::MainWindow *ui;
+
+    void createActions();
+    void createMenus();
+    void loadFile(const QString &fileName);
+    bool saveFile(const QString &fileName);
+
+    QString curFile;
+
+    QMenu   *fileMenu;
+    QAction *openAct;
+    QAction *saveAct;
 
 public slots:
     void selectLineWidth(int width);

@@ -19,6 +19,8 @@ public:
     explicit CanvasWidget(QWidget *parent = 0); ~CanvasWidget();
     std::vector< Figure * > shapes;
     Figure* selected;
+
+    ShapeController * getShapeController();
 signals:
     void changingLineWidth(int width);
     void changingLineStyle(LineStyle style);
@@ -34,6 +36,8 @@ public slots:
     void PolygonCornerCountChange(int count);
     void setVerticalReflection(bool isReflecting);
     void setHorizontalReflection(bool isReflecting);
+
+    void setFreeze(bool f);
 
     void saveSVG();
 protected:
@@ -51,5 +55,6 @@ protected:
     FIGURESELECTED workFigure;
     int workPolygonCorCount=5;
     bool isInSpecialBrokenMode = false;
+    bool freeze = false;
 };
 #endif // CANVASWIDGET_H

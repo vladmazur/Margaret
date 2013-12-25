@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFileDialog>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -21,7 +23,72 @@ MainWindow::MainWindow(QWidget *parent) :
                      this, SLOT(setReflectionSettings(bool,bool)));
 
     setPolygonSettingsVisible(false);
+
+    createActions();
+    createMenus();
 }
+
+void MainWindow::createActions()
+ {
+     openAct = new QAction(tr("&Open..."), this);
+     openAct->setShortcuts(QKeySequence::Open);
+     openAct->setStatusTip(tr("Open an existing file"));
+     connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+
+     saveAct = new QAction(tr("&Save..."), this);
+     saveAct->setShortcuts(QKeySequence::Save);
+     saveAct->setStatusTip(tr("Save this file on a disk"));
+     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
+}
+
+void MainWindow::createMenus()
+ {
+     fileMenu = menuBar()->addMenu(tr("&File"));
+     fileMenu->addAction(openAct);
+     fileMenu->addAction(saveAct);
+ }
+
+void MainWindow::loadFile(const QString &fileName)
+{
+    ui->canvas->getShapeController()->loadFromXML(fileName);
+}
+
+bool MainWindow::saveFile(const QString &fileName)
+{
+    ui->canvas->getShapeController()->saveToXML(fileName);
+    curFile = fileName;
+    return true;
+}
+
+void MainWindow::open()
+{
+    ui->canvas->setFreeze(true);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open MGT"),
+                                                    QDir::currentPath(), tr("MGT files (*.mgt)"));
+    if (!fileName.isEmpty())
+        loadFile(fileName);
+    ui->canvas->setFreeze(false);
+    ui->canvas->update();
+}
+
+bool MainWindow::save()
+{
+    if (curFile.isEmpty()) {
+         return saveAs();
+     } else {
+         return saveFile(curFile);
+     }
+}
+
+bool MainWindow::saveAs()
+ {
+     QString fileName = QFileDialog::getSaveFileName(this, tr("Save MGT"),
+                                                     QDir::currentPath(), tr("MGT files (*.mgt)"));
+     if (fileName.isEmpty())
+         return false;
+
+     return saveFile(fileName);
+ }
 
 MainWindow::~MainWindow()
 {
