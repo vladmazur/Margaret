@@ -2,7 +2,7 @@
 
 #include <QPainter>
 GridWidget::GridWidget(QWidget *parent) :
-    QWidget(parent), gridShow(true)
+    QWidget(parent), gridShow(false)
 {
 }
 

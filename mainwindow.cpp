@@ -40,6 +40,10 @@ void MainWindow::createActions()
      saveAct->setShortcuts(QKeySequence::Save);
      saveAct->setStatusTip(tr("Save this file on a disk"));
      connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
+
+     savePNGAct = new QAction(tr("&Save as PNG..."), this);
+     saveAct->setStatusTip(tr("Save this file on a disk as PNG"));
+     connect(savePNGAct, SIGNAL(triggered()), this, SLOT(saveAsPNG()));
 }
 
 void MainWindow::createMenus()
@@ -47,6 +51,7 @@ void MainWindow::createMenus()
      fileMenu = menuBar()->addMenu(tr("&File"));
      fileMenu->addAction(openAct);
      fileMenu->addAction(saveAct);
+     fileMenu->addAction(savePNGAct);
  }
 
 void MainWindow::loadFile(const QString &fileName)
@@ -202,4 +207,16 @@ void MainWindow::resizeEvent ( QResizeEvent * event )
 {
     ui->canvas->setGeometry(150, 20, width()-160, height()-80);
     ui->grid->setGeometry(0, 0, width()-160, height()-80);
+}
+
+bool MainWindow::saveAsPNG()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save PNG"),
+                                                    QDir::currentPath(), tr("PNG files (*.png)"));
+    if (fileName.isEmpty())
+        return false;
+
+    QPixmap pixmap(ui->canvas->size());
+    ui->canvas->render(&pixmap, QPoint(), QRegion(0,0,ui->canvas->width(), ui->canvas->height()));
+    return pixmap.save(fileName);
 }

@@ -47,6 +47,7 @@ private slots:
     void open();
     bool save();
     bool saveAs();
+    bool saveAsPNG();
 
 private:
     Ui::MainWindow *ui;
@@ -61,6 +62,7 @@ private:
     QMenu   *fileMenu;
     QAction *openAct;
     QAction *saveAct;
+    QAction *savePNGAct;
 
 public slots:
     void selectLineWidth(int width);
