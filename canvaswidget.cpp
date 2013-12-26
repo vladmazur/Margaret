@@ -27,6 +27,11 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
     pressedPoint.x = event->localPos().x();
     pressedPoint.y = event->localPos().y();
 
+    if (gridShow) {
+        pressedPoint.x = round(event->localPos().x()/20)*20;
+        pressedPoint.y = round(event->localPos().y()/20)*20;
+    }
+
     if(isInSpecialBrokenMode)
     {
         if (event->button() == Qt::RightButton) {
@@ -37,6 +42,11 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
         {
             pressedPoint.x = event->localPos().x();
             pressedPoint.y = event->localPos().y();
+
+            if (gridShow) {
+                pressedPoint.x = round(event->localPos().x()/20)*20;
+                pressedPoint.y = round(event->localPos().y()/20)*20;
+            }
 
             if (clickCount++ == 0)
             {
@@ -122,6 +132,12 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
         Point currentPoint;
         currentPoint.x = event->localPos().x();
         currentPoint.y = event->localPos().y();
+
+        if (gridShow) {
+            currentPoint.x = round(event->localPos().x()/20)*20;
+            currentPoint.y = round(event->localPos().y()/20)*20;
+        }
+
         if (creating)
         {
             sc.allFigures().back()->setBounds(pressedPoint, currentPoint);
@@ -185,7 +201,7 @@ void CanvasWidget::mouseReleaseEvent (QMouseEvent *)
 
 void CanvasWidget::mouseClickEvent (QMouseEvent * event)
 {
-    cout << "ass";
+//    cout << "ass";
 }
 
 void CanvasWidget::paintEvent (QPaintEvent *)
@@ -198,8 +214,8 @@ void CanvasWidget::paintEvent (QPaintEvent *)
     if (gridShow) {
     QImage background("d:/grid.gif");
 
-    for (int x=0; x< width(); x=x+background.width())
-        for (int y=0; y< height(); y=y+background.height())
+    for (int x=-10; x< width(); x=x+background.width())
+        for (int y=-10; y< height(); y=y+background.height())
             painter.drawImage(x, y, background);
     }
 

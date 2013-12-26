@@ -224,3 +224,9 @@ bool MainWindow::saveAsPNG()
 
     ui->canvas->gridShow = true;
 }
+
+void MainWindow::on_checkBox_stateChanged(int arg1)
+{
+    ui->canvas->gridShow = arg1;
+    ui->canvas->update();
+}

@@ -49,6 +49,8 @@ private slots:
     bool saveAs();
     bool saveAsPNG();
 
+    void on_checkBox_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 
