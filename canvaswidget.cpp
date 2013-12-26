@@ -10,7 +10,7 @@ int clickCount = 0;
 
 CanvasWidget::CanvasWidget(QWidget *parent) :
     QWidget(parent), selected(NULL), creating(false), resizingLU(false),
-    resizingDR(false), gridShow(false), gridAligment(false)
+    resizingDR(false), gridAligment(false)
 {
     workColor = Color(255,212,22,255);
     workPenColor = Color(195,25,172,255);
@@ -24,9 +24,6 @@ CanvasWidget::~CanvasWidget()
 }
 void CanvasWidget::mousePressEvent (QMouseEvent * event)
 {
-    m_lastPoint = event->pos();
-    m_mouseClick = true;
-
     pressedPoint.x = event->localPos().x();
     pressedPoint.y = event->localPos().y();
 
@@ -197,6 +194,15 @@ void CanvasWidget::paintEvent (QPaintEvent *)
         return;
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
+
+    if (gridShow) {
+    QImage background("d:/grid.gif");
+
+    for (int x=0; x< width(); x=x+background.width())
+        for (int y=0; y< height(); y=y+background.height())
+            painter.drawImage(x, y, background);
+    }
+
     for (unsigned i = 0; i < sc.getCount(); ++i)
     {
         Figure * fig = sc.figureAtIndex(i);

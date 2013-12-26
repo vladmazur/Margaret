@@ -19,6 +19,7 @@ public:
     explicit CanvasWidget(QWidget *parent = 0); ~CanvasWidget();
     std::vector< Figure * > shapes;
     Figure* selected;
+    bool gridShow = true;
 
     ShapeController * getShapeController();
 signals:
@@ -52,13 +53,13 @@ protected:
     LineStyle workLineStyle;
     int workLineWidth=3;
     ShapeController sc;
-    bool gridShow, gridAligment;
+    bool /*gridShow,*/ gridAligment;
     FIGURESELECTED workFigure;
     int workPolygonCorCount=5;
     bool isInSpecialBrokenMode = false;
     bool freeze = false;
 
-    QPoint m_lastPoint;
-    bool m_mouseClick = false;
+//    QPoint m_lastPoint;
+//    bool m_mouseClick = false;
 };
 #endif // CANVASWIDGET_H

@@ -216,7 +216,11 @@ bool MainWindow::saveAsPNG()
     if (fileName.isEmpty())
         return false;
 
+    ui->canvas->gridShow = false;
+
     QPixmap pixmap(ui->canvas->size());
     ui->canvas->render(&pixmap, QPoint(), QRegion(0,0,ui->canvas->width(), ui->canvas->height()));
     return pixmap.save(fileName);
+
+    ui->canvas->gridShow = true;
 }
