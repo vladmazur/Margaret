@@ -8,6 +8,8 @@
 
 #include "Figure.h"
 
+#include "scaledialog.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -65,6 +67,7 @@ public slots:
     void selectColors(Color back, Color pen);
     void setPolygonSettingsVisible(bool visible);
     void setReflectionSettings(bool reflectedVer, bool reflectedGor);
+    int getScaleThrouhDialog();
 };
 
 #endif // MAINWINDOW_H

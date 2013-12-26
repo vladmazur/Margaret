@@ -45,6 +45,7 @@ protected:
     virtual void mouseMoveEvent (QMouseEvent * event);
     virtual void mouseReleaseEvent (QMouseEvent * event);
     virtual void paintEvent (QPaintEvent * event);
+    virtual void mouseClickEvent (QMouseEvent * event);
     Point pressedPoint;
     bool creating, resizingLU, resizingDR;
     Color workColor, workPenColor;
@@ -56,5 +57,8 @@ protected:
     int workPolygonCorCount=5;
     bool isInSpecialBrokenMode = false;
     bool freeze = false;
+
+    QPoint m_lastPoint;
+    bool m_mouseClick = false;
 };
 #endif // CANVASWIDGET_H

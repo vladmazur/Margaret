@@ -246,6 +246,10 @@ public:
             c2->y = c1->y; c1->y = temp;
         }
     }
+
+    virtual void scale(double scale)
+    {}
+
 };
 
 

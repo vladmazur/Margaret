@@ -4,6 +4,8 @@
 #include <QFileDialog>
 #include <QSvgGenerator>
 
+#include "scaledialog.h"
+
 int clickCount = 0;
 
 CanvasWidget::CanvasWidget(QWidget *parent) :
@@ -22,6 +24,9 @@ CanvasWidget::~CanvasWidget()
 }
 void CanvasWidget::mousePressEvent (QMouseEvent * event)
 {
+    m_lastPoint = event->pos();
+    m_mouseClick = true;
+
     pressedPoint.x = event->localPos().x();
     pressedPoint.y = event->localPos().y();
 
@@ -58,7 +63,7 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
             }
         }
     }
-    else
+    else // not in Broken mode
     {
         if (selected)
             selected->select(false);
@@ -98,6 +103,16 @@ void CanvasWidget::mousePressEvent (QMouseEvent * event)
                 emit setPolygonSettingsVisible(true);
             else
                 emit setPolygonSettingsVisible(false);
+
+            if (event->button() == Qt::RightButton &&
+                    selected->getType() == FTBroken) {
+                ScaleDialog * sd = new ScaleDialog(this);
+                selected->scale(sd->getNewScale()/100.0);
+                selected->select(false);
+                selected = NULL;
+                event->ignore();
+                delete sd;
+            }
         }
     }
     update();
@@ -160,13 +175,22 @@ void CanvasWidget::mouseMoveEvent (QMouseEvent * event)
 }
 void CanvasWidget::mouseReleaseEvent (QMouseEvent *)
 {
-    if (creating || resizingLU || resizingDR)
-    {
+    if (creating || resizingLU || resizingDR) {
         creating = false;
         resizingLU = false;
         resizingDR = false;
     }
+
+//    if ((m_mouseClick) && (event->pos() == m_lastPoint)) {
+//        emit mouseClickEvent;
+//    }
 }
+
+void CanvasWidget::mouseClickEvent (QMouseEvent * event)
+{
+    cout << "ass";
+}
+
 void CanvasWidget::paintEvent (QPaintEvent *)
 {
     if(freeze)

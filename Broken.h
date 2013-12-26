@@ -196,6 +196,37 @@ public:
     {
         return QDomElement();
     }
+
+    void scale(double scale)
+    {
+        if (scale == 1)
+            return;
+
+//        scale *= 0.5;
+
+        double maxDeltaX = (center-leftUpperPoint).x;
+        double maxDeltaY = (center-leftUpperPoint).y;
+
+        for(int i=0; i<getVertexes().size(); i++)
+        {
+            int sgnx = 1, sgny=1;
+            if (vertexes[i].x < center.x)
+                sgnx = -1;
+            if (vertexes[i].y < center.y)
+                sgny = -1;
+            if (scale > 1) {
+                sgnx *= -1;
+                sgny *= -1;
+            }
+            Point delta = (center - vertexes[i]);
+            if (scale > 1)
+                delta *= 0.75;
+            delta.x *= sgnx * scale * delta.x/maxDeltaX;
+            delta.y *= sgny * scale * delta.y/maxDeltaY;
+            vertexes[i] -= delta;
+        }
+        makeVertexes();
+    }
     
 };
 

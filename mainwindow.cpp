@@ -186,3 +186,13 @@ void MainWindow::on_saveBu_pressed()
 {
     ui->canvas->saveSVG();
 }
+
+int MainWindow::getScaleThrouhDialog()
+{
+    int result = 100;
+
+    QDialog * sd = new ScaleDialog(this);
+    sd->show();
+
+    return result;
+}

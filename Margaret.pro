@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     Square.cpp \
     canvaswidget.cpp \
     colorbuttonpicker.cpp \
-    gridwidget.cpp
+    gridwidget.cpp \
+    scaledialog.cpp
 
 HEADERS  += mainwindow.h \
     Broken.h \
@@ -48,6 +49,8 @@ HEADERS  += mainwindow.h \
     Square.h \
     canvaswidget.h \
     colorbuttonpicker.h \
-    gridwidget.h
+    gridwidget.h \
+    scaledialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    scaledialog.ui
