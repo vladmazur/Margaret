@@ -12,6 +12,8 @@
 #include <iostream>
 #include <vector>
 
+#define M_PI 3.1415926
+
 #include "Figure.h"
 
 using namespace std;

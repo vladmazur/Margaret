@@ -202,7 +202,8 @@ public:
         if (scale == 1)
             return;
 
-//        scale *= 0.5;
+        if (scale < 1)
+            scale = 1 - scale;
 
         double maxDeltaX = (center-leftUpperPoint).x;
         double maxDeltaY = (center-leftUpperPoint).y;

@@ -10,8 +10,8 @@ QT += xml
 #QMAKE_CXXFLAGS = -stdlib=libc++
 #QMAKE_CXXFLAGS += -stdlib=libc++
 CONFIG   += c++11
-QMAKE_CXXFLAGS += -stdlib=libc++
-QMAKE_CXXFLAGS += -mmacosx-version-min=10.7
+#QMAKE_CXXFLAGS += -stdlib=libc++
+#QMAKE_CXXFLAGS += -mmacosx-version-min=10.7
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
