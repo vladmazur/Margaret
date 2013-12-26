@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     QObject::connect(ui->colorPickerButton, SIGNAL(colorChanged(Color, COLORTYPE)),
                      ui->canvas, SLOT(setColor(Color, COLORTYPE)));
 
@@ -195,4 +196,10 @@ int MainWindow::getScaleThrouhDialog()
     sd->show();
 
     return result;
+}
+
+void MainWindow::resizeEvent ( QResizeEvent * event )
+{
+    ui->canvas->setGeometry(150, 20, width()-160, height()-80);
+    ui->grid->setGeometry(0, 0, width()-160, height()-80);
 }

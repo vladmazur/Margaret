@@ -42,6 +42,7 @@ private slots:
     void on_HorizontalReflCheck_stateChanged(int arg1);
 
     void on_saveBu_pressed();
+    void resizeEvent ( QResizeEvent * event );
 
     void open();
     bool save();
@@ -67,7 +68,7 @@ public slots:
     void selectColors(Color back, Color pen);
     void setPolygonSettingsVisible(bool visible);
     void setReflectionSettings(bool reflectedVer, bool reflectedGor);
-    int getScaleThrouhDialog();
+    int  getScaleThrouhDialog();
 };
 
 #endif // MAINWINDOW_H
