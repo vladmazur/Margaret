@@ -307,31 +307,11 @@ void CanvasWidget::setHorizontalReflection(bool isReflecting)
     }
 }
 
-void CanvasWidget::saveSVG()
+void CanvasWidget::save()
 {
-    QString newPath = QFileDialog::getSaveFileName(this, tr("Save MGT"),
-                                                   QDir::currentPath(), tr("MGT files (*.mgt)"));
-
-    if (newPath.isEmpty())
-        return;
-
-    QSvgGenerator generator;
-    generator.setFileName(newPath);
-    generator.setSize(QSize(width(), height()));
-    generator.setViewBox(QRect(0, 0, width(), height()));
-    generator.setTitle(tr("SVG file"));
-    generator.setDescription(tr("Created by Margaret"));
-
-    QPainter painter; painter.begin(&generator);
-    painter.setRenderHint(QPainter::Antialiasing);
-
-    for (unsigned i = 0; i < sc.getCount(); ++i)
-    {
-        sc.figureAtIndex(i)->makeVertexes();
-        sc.figureAtIndex(i)->select(false);
-        sc.figureAtIndex(i)->draw(painter);
-    }
-    painter.end();
+    if (selected)
+        selected->select(false);
+    selected = NULL;
 }
 
 ShapeController * CanvasWidget::getShapeController()

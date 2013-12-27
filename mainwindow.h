@@ -41,7 +41,6 @@ private slots:
 
     void on_HorizontalReflCheck_stateChanged(int arg1);
 
-    void on_saveBu_pressed();
     void resizeEvent ( QResizeEvent * event );
 
     void open();

@@ -188,11 +188,6 @@ void MainWindow::on_HorizontalReflCheck_stateChanged(int arg1)
     ui->canvas->setHorizontalReflection(bool(arg1));
 }
 
-void MainWindow::on_saveBu_pressed()
-{
-    ui->canvas->saveSVG();
-}
-
 int MainWindow::getScaleThrouhDialog()
 {
     int result = 100;
@@ -217,6 +212,7 @@ bool MainWindow::saveAsPNG()
         return false;
 
     ui->canvas->gridShow = false;
+    ui->canvas->save();
 
     QPixmap pixmap(ui->canvas->size());
     ui->canvas->render(&pixmap, QPoint(), QRegion(0,0,ui->canvas->width(), ui->canvas->height()));

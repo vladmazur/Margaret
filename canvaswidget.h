@@ -40,7 +40,7 @@ public slots:
 
     void setFreeze(bool f);
 
-    void saveSVG();
+    void save();
 protected:
     virtual void mousePressEvent (QMouseEvent * event);
     virtual void mouseMoveEvent (QMouseEvent * event);
